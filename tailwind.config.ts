@@ -24,7 +24,7 @@ export default {
         "2xl": "2.25rem"
       },
       fontFamily: {
-        "league-spartan": "League Spartan"
+        'sans': ['League Spartan'],
       },
       "borderRadius": {
         "none": "0",
