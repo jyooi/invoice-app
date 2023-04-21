@@ -1,3 +1,4 @@
+// @ts-ignore
 import withTwin from "./withTwin.cjs";
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
