@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "~/utils/api";
+import { Body } from "~/components/Typography";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -49,6 +50,9 @@ const Home: NextPage = () => {
             </p>
             <AuthShowcase />
           </div>
+          <>
+            <Body variant>Testing Body medium</Body>
+          </>
         </div>
       </main>
     </>
