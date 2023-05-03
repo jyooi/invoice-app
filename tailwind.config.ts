@@ -1,7 +1,16 @@
 import { type Config } from "tailwindcss";
 
 export default {
+  darkMode: 'class',
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  purge: {
+    enabled: true,
+    content: ['./src/**/*.tsx'],
+    options: {
+      safelist: ['dark'], //specific classes
+    },
+  },
+
   theme: {
     extend: {
       colors: {
@@ -16,7 +25,8 @@ export default {
         "09": "#ec5757",
         "10": "#9277ff",
         "11": "#f8f8fb",
-        "12": "#141625"
+        "12": "#141625",
+        "13": "#F9FAFE"
       },
       "fontSize": {
         "base": "0.8125rem",

@@ -5,6 +5,8 @@ import GlobalStyles from "../styles/GlobalStyles";
 import { api } from "~/utils/api";
 import "../styles/fonts/league/league.css";
 
+import { ThemeProvider } from "next-themes";
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
@@ -12,7 +14,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <GlobalStyles />
-      <Component {...pageProps} />
+      <ThemeProvider attribute="class">
+        <Component {...pageProps} />
+      </ThemeProvider>
     </SessionProvider>
   );
 };

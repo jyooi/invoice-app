@@ -4,8 +4,11 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { Body } from "~/components/Typography";
+import { Button } from "~/components/Button";
+import { useTheme } from "next-themes";
 
 const Home: NextPage = () => {
+  const { theme, setTheme } = useTheme();
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   return (
@@ -17,12 +20,15 @@ const Home: NextPage = () => {
       </Head>
       <main tw="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div>
-          <h1 tw="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+          <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+            toggle
+          </button>
+          <h1 tw="text-5xl font-extrabold tracking-tight  sm:text-[5rem]">
             Create <span tw="text-[hsl(280,100%,70%)]">T3</span> App
           </h1>
           <div tw="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             <Link
-              tw="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+              tw="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4  hover:bg-white/20"
               href="https://create.t3.gg/en/usage/first-steps"
               target="_blank"
             >
@@ -33,7 +39,7 @@ const Home: NextPage = () => {
               </div>
             </Link>
             <Link
-              tw="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+              tw="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4  hover:bg-white/20"
               href="https://create.t3.gg/en/introduction"
               target="_blank"
             >
@@ -45,14 +51,16 @@ const Home: NextPage = () => {
             </Link>
           </div>
           <div tw="flex flex-col items-center gap-2">
-            <p tw="text-2xl text-white">
+            <p tw="text-2xl ">
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
             </p>
             <AuthShowcase />
           </div>
-          <>
+          <div>
             <Body variant>Testing Body medium</Body>
-          </>
+
+            <Button variant={"secondary"} label={"Mark as paid"} />
+          </div>
         </div>
       </main>
     </>
@@ -71,12 +79,12 @@ const AuthShowcase: React.FC = () => {
 
   return (
     <div tw="flex flex-col items-center justify-center gap-4">
-      <p tw="text-center text-2xl text-white">
+      <p tw="text-center text-2xl ">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
-        tw="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+        tw="rounded-full bg-white/10 px-10 py-3 font-semibold  no-underline transition hover:bg-white/20"
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
         {sessionData ? "Sign out" : "Sign in"}
