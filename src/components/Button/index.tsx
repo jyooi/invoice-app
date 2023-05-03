@@ -3,7 +3,7 @@ import Image from "next/image";
 import AddIconSvg from "../../image/Icons/add_icon.svg";
 
 type ButtonProps = {
-  variant: "primary" | "secondary" | "alert";
+  variant: "primary" | "secondary" | "tertiary" | "alert" | "long";
   iconBefore?: React.ReactNode;
   addIcon?: boolean;
   label: string;
@@ -22,8 +22,22 @@ const Label = styled.span(() => [
 const ButtonGroup = styled.button(
   ({ variant }: { variant: ButtonProps["variant"] }) => [
     variant === "primary" && tw`bg-01 hover:bg-02 text-white`,
+
     variant === "secondary" &&
       tw`text-07 bg-13 hover:bg-05 dark:bg-04 dark:text-05 dark:hover:bg-white`,
+
+    variant === "tertiary" &&
+      tw`text-06 bg-14 hover:bg-08 dark:text-05 dark:hover:bg-03`,
+
+    variant === "alert" && tw`text-white bg-09 hover:bg-10`,
+
+    variant === "long" && tw`text-07 bg-13 hover:bg-05`,
+
+    variant === "long" &&
+      css`
+        width: 21.875rem;
+      `,
+
     tw`h-12 rounded-5xl flex items-center justify-center p-2`,
   ]
 );
