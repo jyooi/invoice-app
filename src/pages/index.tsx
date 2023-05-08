@@ -1,10 +1,9 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
+import { TextField } from "../components/TextField";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "~/utils/api";
-import { Body } from "~/components/Typography";
-import { Button } from "~/components/Button";
+
 import { useTheme } from "next-themes";
 
 const Home: NextPage = () => {
@@ -23,44 +22,17 @@ const Home: NextPage = () => {
           <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
             toggle
           </button>
-          <h1 tw="text-5xl font-extrabold tracking-tight  sm:text-[5rem]">
-            Create <span tw="text-[hsl(280,100%,70%)]">T3</span> App
-          </h1>
-          <div tw="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <Link
-              tw="flex max-w-xs flex-col gap-4 rounded-xl "
-              href="https://create.t3.gg/en/usage/first-steps"
-              target="_blank"
-            >
-              <h3 tw="text-2xl font-bold">First Steps →</h3>
-              <div tw="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
-              </div>
-            </Link>
-            <Link
-              tw="flex max-w-xs flex-col gap-4 rounded-xl"
-              href="https://create.t3.gg/en/introduction"
-              target="_blank"
-            >
-              <h3 tw="text-2xl font-bold">Documentation →</h3>
-              <div tw="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
-              </div>
-            </Link>
-          </div>
+
           <div tw="flex flex-col items-center gap-2">
             <p tw="text-2xl ">
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
             </p>
             <AuthShowcase />
           </div>
-          <div tw="w-full">
-            <Body variant>Testing Body medium</Body>
-
-            <Button variant="long" label={"Mark as paid"} />
-          </div>
+          <br />
+          <br />
+          <br />
+          <TextField label="Street Address" />
         </div>
       </main>
     </>
