@@ -52,9 +52,7 @@ export const Button = ({
     <ButtonGroup variant={variant}>
       {iconBefore && <>{iconBefore}</>}
       {addIcon && !iconBefore && (
-        <>
-          <Image src={AddIconSvg as string} alt="add-icon" />
-        </>
+        <Image src={AddIconSvg as string} alt="add-icon" />
       )}
       <Label tw="p-4">{label}</Label>
     </ButtonGroup>
