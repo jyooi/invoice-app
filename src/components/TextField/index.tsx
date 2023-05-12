@@ -15,9 +15,16 @@ const TextInput = styled.input(() => [
   `,
 ]);
 
-const Label = styled.label(() => [tw`text-07 text-base dark:text-05`]);
+const Label = styled.label(
+  () => [tw` text-07 text-base dark:text-05`],
+  css`
+    letter-spacing: -0.1px;
+    line-height: 15px;
+    padding-bottom: 9px;
+  `
+);
 
-const TextFieldGroup = styled.div(() => [tw`flex flex-col`]);
+const TextFieldGroup = styled.div(() => [tw`flex flex-col caret-01`]);
 
 type PropType = {
   label: string;
