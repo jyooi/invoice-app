@@ -3,7 +3,7 @@ import Head from "next/head";
 import { TextField } from "../components/TextField";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "~/utils/api";
-
+import { Select } from "~/components/Select";
 import { useTheme } from "next-themes";
 
 const Home: NextPage = () => {
@@ -34,6 +34,7 @@ const Home: NextPage = () => {
           <br />
           <TextField label="Street Address" />
         </div>
+        <Select />
       </main>
     </>
   );
