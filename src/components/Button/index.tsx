@@ -7,6 +7,7 @@ type ButtonProps = {
   iconBefore?: React.ReactNode;
   addIcon?: boolean;
   label: string;
+  onClick: () => void;
 };
 
 const Label = styled.span(() => [
@@ -47,9 +48,10 @@ export const Button = ({
   label,
   addIcon,
   variant = "primary",
+  onClick,
 }: ButtonProps) => {
   return (
-    <ButtonGroup variant={variant}>
+    <ButtonGroup variant={variant} onClick={onClick}>
       {iconBefore && <>{iconBefore}</>}
       {addIcon && !iconBefore && (
         <Image src={AddIconSvg as string} alt="add-icon" />

@@ -5,6 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { Select } from "~/components/Select";
 import { useTheme } from "next-themes";
+import { ChangeEvent } from "react";
 
 const Home: NextPage = () => {
   const { theme, setTheme } = useTheme();
@@ -32,9 +33,15 @@ const Home: NextPage = () => {
           <br />
           <br />
           <br />
-          <TextField label="Street Address" />
+          {/* <TextField
+            label="Street Address"
+            onChange={function (e: ChangeEvent<HTMLInputElement>): void {
+              throw new Error("Function not implemented.");
+            }}
+            value={""}
+          /> */}
         </div>
-        <Select />
+        <Select options={[{ id: "1", name: "hello world" }]} value={""} />
       </main>
     </>
   );

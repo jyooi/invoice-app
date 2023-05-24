@@ -28,13 +28,15 @@ const TextFieldGroup = styled.div(() => [tw`flex flex-col caret-01`]);
 
 type PropType = {
   label: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
 };
 
-export const TextField = ({ label }: PropType) => {
+export const TextField = ({ label, onChange, value }: PropType) => {
   return (
     <TextFieldGroup>
       <Label>{label}</Label>
-      <TextInput />
+      <TextInput onChange={onChange} value={value} />
     </TextFieldGroup>
   );
 };

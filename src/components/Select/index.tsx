@@ -4,14 +4,6 @@ import Image from "next/image";
 import ChevronDownSvgIcon from "../../image/Icons/purple_chevron_down_icon.svg";
 import tw, { styled, css } from "twin.macro";
 import { HeadingS } from "../Typography";
-const people = [
-  { name: "Wade Cooper" },
-  { name: "Arlene Mccoy" },
-  { name: "Devon Webb" },
-  { name: "Tom Cook" },
-  { name: "Tanya Fox" },
-  { name: "Hellen Schmidt" },
-];
 
 const ListButton = styled(Listbox.Button)(() => [
   tw`relative w-full cursor-default pl-5 text-left border border-05 rounded border border-05 hover:border-01`,
@@ -42,6 +34,8 @@ const ListOptions = styled(Listbox.Options)(() => [
   `,
 ]);
 
+const ListBoxContainer = styled.div(() => [tw`fixed top-16 w-52 `]);
+
 const ListOption = styled(Listbox.Option)(() => [
   tw`h-12`,
   tw`relative cursor-default select-none`,
@@ -53,15 +47,24 @@ const SelectedLabel = styled(HeadingS)(() => [
   tw`dark:text-05 hover:text-01 dark:hover:text-01`,
 ]);
 
-export function Select() {
-  const [selected, setSelected] = useState(people[0]);
+type PropType = {
+  setSelected: (value: string) => void;
+  selected: string;
+  options?: Option[];
+};
 
+type Option = {
+  id: string;
+  name: string;
+};
+
+export function Select({ options, setSelected, selected }: PropType) {
   return (
-    <div tw="fixed top-16 w-52 ">
+    <ListBoxContainer>
       <Listbox value={selected} onChange={setSelected}>
         <div tw="relative mt-1">
           <ListButton>
-            <HeadingS variant>{selected?.name}</HeadingS>
+            <HeadingS variant>{selected}</HeadingS>
             <span tw="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
               <Image
                 src={ChevronDownSvgIcon as string}
@@ -76,15 +79,15 @@ export function Select() {
             leaveTo="opacity-0"
           >
             <ListOptions>
-              {people.map((person, personIdx) => (
-                <ListOption key={personIdx} value={person}>
-                  <SelectedLabel variant>{person.name}</SelectedLabel>
+              {options?.map(({ id, name }) => (
+                <ListOption key={id} value={name}>
+                  <SelectedLabel variant>{name}</SelectedLabel>
                 </ListOption>
               ))}
             </ListOptions>
           </Transition>
         </div>
       </Listbox>
-    </div>
+    </ListBoxContainer>
   );
 }
