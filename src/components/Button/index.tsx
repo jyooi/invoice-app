@@ -1,3 +1,5 @@
+"use client";
+
 import tw, { styled, css } from "twin.macro";
 import Image from "next/image";
 import AddIconSvg from "../../image/Icons/add_icon.svg";

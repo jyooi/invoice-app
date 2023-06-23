@@ -4,20 +4,30 @@ import { SessionProvider } from "next-auth/react";
 import GlobalStyles from "../styles/GlobalStyles";
 import { api } from "~/utils/api";
 import "../styles/fonts/league/league.css";
+import { CacheProvider, type EmotionCache } from "@emotion/react";
+import createEmotionCache from "../utils/createEmotionCache";
+
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
 
 import { ThemeProvider } from "next-themes";
 
-const MyApp: AppType<{ session: Session | null }> = ({
+const MyApp: AppType<{
+  session: Session | null;
+  emotionCache?: EmotionCache;
+}> = ({
   Component,
-  pageProps: { session, ...pageProps },
+  pageProps: { session, emotionCache = clientSideEmotionCache, ...pageProps },
 }) => {
   return (
-    <SessionProvider session={session}>
-      <GlobalStyles />
-      <ThemeProvider attribute="class">
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </SessionProvider>
+    <CacheProvider value={emotionCache}>
+      <SessionProvider session={session}>
+        <GlobalStyles />
+        <ThemeProvider attribute="class">
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </SessionProvider>
+    </CacheProvider>
   );
 };
 

@@ -1,3 +1,4 @@
+"use client";
 import tw, { styled, css } from "twin.macro";
 
 export const HeadingL = styled.h3(() => [

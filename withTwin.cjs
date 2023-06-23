@@ -11,7 +11,11 @@ module.exports = function withTwin( // @ts-ignore
   /** @type {import("next").NextConfig}} */ nextConfig
 ) {
   return {
+    
     ...nextConfig,
+
+
+    
     /**
      * @param {{ module: { rules?: any; }; resolve: { fallback: any; }; }} config
      * @param {{ defaultLoaders?: any; dev?: any; isServer?: any; }} options
