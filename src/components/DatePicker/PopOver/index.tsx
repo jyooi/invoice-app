@@ -3,7 +3,7 @@ import { type MutableRefObject, useRef } from "react";
 import { usePopover, Overlay, DismissButton } from "@react-aria/overlays";
 import { type DatePickerState } from "react-stately";
 import { type Placement } from "react-aria";
-import tw, { styled } from "twin.macro";
+import tw, { styled, css } from "twin.macro";
 type PropType = {
   state: DatePickerState;
   children: React.ReactNode;
@@ -12,7 +12,14 @@ type PropType = {
 };
 
 const Container = styled.div(() => [
-  tw`absolute top-full z-50 mt-2 rounded-md border border-gray-300 bg-white p-8 shadow-lg bg-red-50`,
+  tw`absolute top-full z-50 mt-2 bg-white `,
+  tw`dark:bg-04`,
+
+  css`
+    box-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25);
+    border-radius: 8px;
+    padding: 26px 18.5px 31px 18.5px;
+  `,
 ]);
 
 export function Popover(props: PropType) {

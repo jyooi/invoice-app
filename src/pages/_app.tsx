@@ -6,7 +6,7 @@ import { api } from "~/utils/api";
 import "../styles/fonts/league/league.css";
 import { CacheProvider, type EmotionCache } from "@emotion/react";
 import createEmotionCache from "../utils/createEmotionCache";
-
+import {SSRProvider} from 'react-aria';
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -20,14 +20,16 @@ const MyApp: AppType<{
   pageProps: { session, emotionCache = clientSideEmotionCache, ...pageProps },
 }) => {
   return (
-    <CacheProvider value={emotionCache}>
-      <SessionProvider session={session}>
-        <GlobalStyles />
-        <ThemeProvider attribute="class">
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </SessionProvider>
-    </CacheProvider>
+    <SSRProvider>
+      <CacheProvider value={emotionCache}>
+        <SessionProvider session={session}>
+          <GlobalStyles />
+          <ThemeProvider attribute="class">
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </SessionProvider>
+      </CacheProvider>
+    </SSRProvider>
   );
 };
 

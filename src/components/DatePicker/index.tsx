@@ -36,18 +36,24 @@ export const DatePicker = (
       <span {...labelProps} tw="text-sm text-gray-800">
         {props.label}
       </span>
-      <div {...groupProps} ref={ref} tw="flex">
-        <div
-          className="group"
-          tw="relative flex items-center rounded-l-md border border-gray-300 bg-white p-1 pr-10 transition-colors group-focus-within:border-violet-600 group-hover:border-gray-400 group-focus-within:group-hover:border-violet-600"
-        >
+      <div
+        {...groupProps}
+        ref={ref}
+        tw="flex justify-between relative flex h-12 w-52 items-center rounded border border-gray-300 bg-white transition-colors group-focus-within:border-violet-600 group-hover:border-gray-400 pl-5 
+          font-bold border-05 hover:border-01 group-focus-within:group-hover:border-violet-600"
+      >
+        <div className="group" tw="">
           <DateField {...fieldProps} />
           {state.validationState === "invalid" && (
             <>╳</>
             // <ExclamationIcon className="absolute right-1 h-6 w-6 text-red-500" />
           )}
         </div>
-        <FieldButton buttonProps={buttonProps} isPressed={state.isOpen}>
+        <FieldButton
+          buttonProps={buttonProps}
+          isPressed={state.isOpen}
+          tw="border-0 outline-none"
+        >
           <Image src={calendarIcon as string} alt="calendar icon" />
         </FieldButton>
       </div>

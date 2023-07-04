@@ -15,8 +15,13 @@ import { createCalendar } from "@internationalized/date";
 import { CalendarGrid } from "../CalendarGrid";
 import { HeadingS } from "../../Typography";
 import { type DateValue } from "@react-types/calendar";
+import Image from "next/image";
+import leftChevron from "../../../image/Icons/purple_chevron_left_icon.svg";
+import rightChevron from "../../../image/Icons/purple_chevron_right_icon.svg";
 
-const CalendarContainer = styled.div(() => [tw`flex items-center pb-4`]);
+const CalendarContainer = styled.div(() => [
+  tw`flex items-center justify-between mb-8 `,
+]);
 
 const Button = styled.button(
   ({
@@ -50,11 +55,11 @@ export function Calendar(props: CalendarProps<DateValue>) {
     <div {...calendarProps} ref={ref}>
       <CalendarContainer>
         <CalendarButton {...prevButtonProps}>
-          {/* <ChevronLeftIcon w={6} h={6} /> */}
+          <Image src={leftChevron as string} alt="left-chevron" />
         </CalendarButton>
         <HeadingS>{title}</HeadingS>
         <CalendarButton {...nextButtonProps}>
-          {/* <ChevronRightIcon w={6} h={6} /> */}
+          <Image src={rightChevron as string} alt="left-chevron" />
         </CalendarButton>
       </CalendarContainer>
       <CalendarGrid state={state} />

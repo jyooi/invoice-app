@@ -18,12 +18,10 @@ export function CalendarGrid({ state, ...props }: PropType) {
 
   return (
     <table {...gridProps} cellPadding="0" tw="flex-1">
-      <thead {...headerProps} tw="text-gray-600">
+      <thead {...headerProps} tw="text-gray-500">
         <tr>
           {weekDays.map((day, index) => (
-            <th tw="text-center" key={index}>
-              {day}
-            </th>
+            <th tw="text-center" key={index}></th>
           ))}
         </tr>
       </thead>

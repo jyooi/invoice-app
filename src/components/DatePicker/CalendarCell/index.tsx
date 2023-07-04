@@ -25,7 +25,7 @@ const FormattedDateContainer = styled.div(
     isDisabled: boolean;
   }) => [
     tw`h-10 w-10 outline-none`,
-    isSelected && (isInvalid ? tw`bg-red-300` : tw`bg-violet-300`),
+    isSelected && (isInvalid ? tw`bg-08` : tw`text-02 hover:text-white`),
     isDisabled && tw`appearance-none`,
   ]
 );
@@ -42,13 +42,13 @@ const FormattedDate = styled.div(
     isSelected: boolean;
     isFocusVisible: boolean;
   }) => [
-    tw`flex h-full w-full items-center justify-center rounded-full`,
-    isDisabled && !isInvalid && tw`text-gray-400`,
+    tw`flex h-full w-full items-center justify-center rounded-full text-sm font-bold `,
+    isDisabled && !isInvalid && tw`text-gray-400 `,
     isFocusVisible && tw`group-focus:z-20 ring-2 ring-violet-600 ring-offset-2`,
     isSelected && !isDisabled && isInvalid
       ? tw`hover:bg-red-400`
-      : tw`hover:bg-violet-400`,
-    !isSelected && !isDisabled && tw`hover:bg-violet-100`,
+      : tw`hover:bg-01`,
+    !isSelected && !isDisabled && tw`hover:bg-02 hover:text-white`,
   ]
 );
 export function CalendarCell({ state, date }: PropType) {

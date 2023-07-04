@@ -35,7 +35,7 @@ export function DateField(props: AriaDatePickerProps<DateValue>) {
 }
 
 const DateFieldContainer = styled.div(({ editable }: { editable: boolean }) => [
-  tw`box-content rounded-sm px-0.5 text-right tabular-nums outline-none focus:bg-violet-600 focus:text-white `,
+  tw`box-content rounded-sm px-0.5 text-right tabular-nums outline-none focus:bg-violet-600 focus:text-white  `,
   editable ? "text-gray-500" : "text-gray-800",
 ]);
 
@@ -61,7 +61,7 @@ function DateSegment({
     >
       <span
         aria-hidden="true"
-        tw="block w-full text-center italic text-gray-500 group-focus:text-white"
+        tw="block w-full text-center  text-gray-500 group-focus:text-white "
         style={{
           visibility: segment.isPlaceholder ? undefined : "hidden",
           height: segment.isPlaceholder ? undefined : 0,
