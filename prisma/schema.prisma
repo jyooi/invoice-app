@@ -38,6 +38,7 @@ model Account {
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@index([userId])
 }
 
 model Session {
@@ -46,6 +47,8 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
 }
 
 model User {
@@ -56,6 +59,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    Invoice       Invoice[]
 }
 
 model VerificationToken {
@@ -64,4 +68,37 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Invoice {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    title       String
+    description String?
+    amount      Int
+    currency    String
+    status      String
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId      String
+    items       Item[]
+
+    @@index([userId])
+}
+
+model Item {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    title     String
+    amount    Int
+    invoice   Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+    invoiceId String
+
+    @@index([invoiceId])
+}
+
+// Docs generator
+generator docs {
+    provider = "node node_modules/prisma-docs-generator"
 }
