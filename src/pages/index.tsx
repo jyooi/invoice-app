@@ -4,8 +4,7 @@ import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { useTheme } from "next-themes";
-import { today, getLocalTimeZone } from "@internationalized/date";
-import { DatePicker } from "~/components/DatePicker";
+
 const Home: NextPage = () => {
   const { theme, setTheme } = useTheme();
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -33,8 +32,6 @@ const Home: NextPage = () => {
           <br />
           <br />
         </div>
-        {/* <DatePicker label="Trip dates" minValue={today(getLocalTimeZone())} /> */}
-        {/* <Select options={[{ id: "1", name: "hello world" }]} value={""} /> */}
       </main>
     </>
   );
