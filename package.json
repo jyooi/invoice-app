@@ -8,7 +8,8 @@
     "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
-    "serve-docs": "serve ../invoice-app/prisma/docs"
+    "serve-docs": "serve ../invoice-app/prisma/docs",
+    "db-push": "npx prisma db push"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
