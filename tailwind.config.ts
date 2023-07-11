@@ -1,13 +1,13 @@
 import { type Config } from "tailwindcss";
 
 export default {
-  darkMode: 'class',
+  darkMode: "class",
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   purge: {
     enabled: true,
-    content: ['./src/**/*.tsx'],
+    content: ["./src/**/*.tsx"],
     options: {
-      safelist: ['dark'], //specific classes
+      safelist: ["dark"], //specific classes
     },
   },
 
@@ -27,29 +27,35 @@ export default {
         "11": "#f8f8fb",
         "12": "#141625",
         "13": "#F9FAFE",
-        "14": "#373B53"
+        "14": "#373B53",
+        "15": "#494E6E",
       },
-      "fontSize": {
-        "base": "0.8125rem",
-        "lg": "0.9375rem",
-        "xl": "1.5rem",
-        "2xl": "2.25rem"
+      fontSize: {
+        base: "0.8125rem",
+        lg: "0.9375rem",
+        xl: "1.5rem",
+        "2xl": "2.25rem",
       },
       fontFamily: {
-        'sans': ['League Spartan'],
+        sans: ["League Spartan"],
       },
-      "borderRadius": {
-        "none": "0",
-        "xs": "0.09452187269926071rem",
-        "sm": "0.125rem",
-        "default": "0.12941250205039978rem",
-        "lg": "0.16113124787807465rem",
-        "xl": "0.25rem",
+      borderRadius: {
+        none: "0",
+        xs: "0.09452187269926071rem",
+        sm: "0.125rem",
+        default: "0.12941250205039978rem",
+        lg: "0.16113124787807465rem",
+        xl: "0.25rem",
         "2xl": "0.375rem",
         "3xl": "0.5rem",
         "4xl": "1.25rem",
-        "5xl": "1.5rem"
-      }
+        "5xl": "1.5rem",
+      },
+    },
+    screens: {
+      mobile: "375px",
+      tablet: "768px",
+      desktop: "1440px",
     },
   },
   plugins: [],
