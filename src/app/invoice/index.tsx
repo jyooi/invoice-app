@@ -1,3 +1,4 @@
+import { Navbar } from "~/components/Navbar";
 // import { api } from "~/utils/api";
 
 export default function Invoice() {
@@ -7,5 +8,9 @@ export default function Invoice() {
   //   id: "clgpx8mrl0000p1jesiww",
   // });
 
-  return <div tw="h-screen"></div>;
+  return (
+    <div tw="h-screen">
+      <Navbar />
+    </div>
+  );
 }

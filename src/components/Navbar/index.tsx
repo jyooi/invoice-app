@@ -12,7 +12,7 @@ import { useTheme } from "next-themes";
 // and able to be a hamburger menu when on mobile size
 
 const Container = styled.nav(() => [
-  tw`h-20 bg-14 desktop:(flex justify-between items-center flex-col sticky h-full top-0 float-left flex-nowrap) tablet:(flex justify-between items-center flex-row flex-nowrap) mobile:([height:72px] flex justify-between items-center flex-row flex-nowrap) `, // responsive query
+  tw`h-20 bg-14 desktop:(flex justify-between items-center flex-col sticky h-screen top-0 float-left flex-nowrap rounded-tr-[20px] rounded-br-[20px]) tablet:(flex justify-between items-center flex-row flex-nowrap) mobile:([height:72px] flex justify-between items-center flex-row flex-nowrap) `, // responsive query
 ]);
 
 const RightNavItemContainer = styled.div(() => [
@@ -34,10 +34,6 @@ const RoundAvatar = styled(Image)(() => [
 const BorderLine = styled.div(() => [
   tw`bg-15 desktop:([height:1px] w-full) tablet:([width:1px] h-full) mobile:([width:1px] h-full)`,
 ]);
-
-// write me a avatar on tailwindcss
-
-// const  = styled.div(() => [])
 
 export const Navbar = () => {
   const { theme, setTheme } = useTheme();
