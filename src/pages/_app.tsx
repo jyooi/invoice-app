@@ -13,6 +13,7 @@ import Layout from "./components/layout";
 const clientSideEmotionCache = createEmotionCache();
 
 import { ThemeProvider } from "next-themes";
+import { AppBackground } from "./components/AppBackground";
 
 const MyApp: AppType<{
   session: Session | null;
@@ -27,9 +28,11 @@ const MyApp: AppType<{
         <SessionProvider session={session}>
           <GlobalStyles />
           <ThemeProvider attribute="class">
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <AppBackground>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </AppBackground>
           </ThemeProvider>
         </SessionProvider>
       </CacheProvider>

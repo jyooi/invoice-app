@@ -41,7 +41,7 @@ export const Header = () => {
           addIcon
           variant="primary"
           label={"New Invoice"}
-          onClick={() => {}}
+          onClick={() => null}
         />
       </div>
     </div>

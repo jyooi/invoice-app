@@ -1,7 +1,7 @@
 // import { api } from "~/utils/api";
 
-import { useState } from "react";
 import { Header } from "./Header";
+import { Row } from "./Row";
 // import { StatusCard } from "../components/StatusCard";
 export default function Invoice() {
   // const users = api.user.getAll.useQuery();
@@ -10,11 +10,18 @@ export default function Invoice() {
   //   id: "clgpx8mrl0000p1jesiww",
   // });
 
-  const [isCheck, setIsCheck] = useState(false);
-
   return (
     <div tw="h-screen">
       <Header />
+
+      <div tw="mt-16 ">
+        <Row />
+        <Row />
+        <Row />
+        <Row />
+        <Row />
+        <Row />
+      </div>
     </div>
   );
 }
