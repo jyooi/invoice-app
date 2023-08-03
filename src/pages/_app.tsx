@@ -13,7 +13,7 @@ import Layout from "./components/layout";
 const clientSideEmotionCache = createEmotionCache();
 
 import { ThemeProvider } from "next-themes";
-import { AppBackground } from "./components/AppBackground";
+import AppBackground from "./components/AppBackground";
 
 const MyApp: AppType<{
   session: Session | null;
