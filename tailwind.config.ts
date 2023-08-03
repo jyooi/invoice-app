@@ -29,6 +29,9 @@ export default {
         "13": "#F9FAFE",
         "14": "#373B53",
         "15": "#494E6E",
+        "status-green": "#33D69F",
+        "status-orange": "#FF8F00",
+        "status-gray": "#373B53",
       },
       fontSize: {
         base: "0.8125rem",
