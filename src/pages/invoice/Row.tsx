@@ -5,8 +5,8 @@ import ChevronRightSvg from "../../image/Icons/purple_chevron_right_icon.svg";
 import Image from "next/image";
 
 const Container = styled.div(() => [
-  tw`min-h-[72px] w-full rounded-md  items-center mb-4`,
-  tw`bg-white border-0 hover:border hover:border-01 cursor-pointer dark:bg-03`,
+  tw`min-h-[72px] w-full rounded-md  items-center mb-[15px]`,
+  tw`bg-white border border-transparent hover:border hover:border-01 cursor-pointer dark:bg-03`,
   tw`desktop:(grid grid-cols-[1fr,1fr,1fr,1fr,1fr,0.1fr] px-6 grid-rows-[1fr])`,
   tw`tablet:(grid grid-cols-[1fr,1fr,1fr,1fr,1fr,0.1fr] px-6 grid-rows-[1fr])`,
   tw`grid grid-cols-[1fr 1fr] grid-rows-[1fr 1fr] p-6`,

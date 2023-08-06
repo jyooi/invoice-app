@@ -1,5 +1,5 @@
 // import { api } from "~/utils/api";
-
+"use client";
 import Header from "./Header";
 import Row from "./Row";
 // import { StatusCard } from "../components/StatusCard";

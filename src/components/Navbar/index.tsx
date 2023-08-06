@@ -12,11 +12,11 @@ import { useTheme } from "next-themes";
 // and able to be a hamburger menu when on mobile size
 
 const Container = styled.nav(() => [
-  tw`h-20 bg-14 desktop:(flex justify-between items-center flex-col sticky h-screen top-0 float-left flex-nowrap rounded-tr-[20px] rounded-br-[20px]) tablet:(flex justify-between items-center flex-row flex-nowrap) mobile:([height:72px] flex justify-between items-center flex-row flex-nowrap) `, // responsive query
+  tw`bg-14 desktop:(h-20 flex justify-between items-center flex-col sticky h-screen top-0 float-left flex-nowrap rounded-tr-[20px] rounded-br-[20px]) tablet:h-20 flex justify-between items-center flex-row flex-nowrap`, // responsive query
 ]);
 
 const RightNavItemContainer = styled.div(() => [
-  tw`desktop:(flex items-center flex-col justify-evenly) tablet:(flex items-center flex-row justify-evenly) mobile:(flex items-center flex-row justify-evenly)`,
+  tw`desktop:(flex items-center flex-col justify-evenly) flex items-center flex-row justify-evenly`,
   css`
     width: 100%;
     max-width: 105px;
@@ -28,11 +28,11 @@ const RightNavItemContainer = styled.div(() => [
 const RightNavItem = styled.div(() => []);
 
 const RoundAvatar = styled(Image)(() => [
-  tw`desktop:(w-10 h-10 rounded-full) desktop:(w-8 h-8 rounded-full) desktop:(w-8 h-8 rounded-full)`,
+  tw`desktop:(w-10 h-10 rounded-full) w-8 h-8 rounded-full`,
 ]);
 
 const BorderLine = styled.div(() => [
-  tw`bg-15 desktop:([height:1px] w-full) tablet:([width:1px] h-full) mobile:([width:1px] h-full)`,
+  tw`bg-15 desktop:([height:1px] w-full) [width:1px] h-full`,
 ]);
 
 export const Navbar = () => {
@@ -43,7 +43,7 @@ export const Navbar = () => {
         <Image
           src={BrandLogo as string}
           alt={"brand_logo"}
-          tw="mobile:([height:72px] w-full)"
+          tw="[height:72px] w-full desktop:(w-20 h-20) tablet:(w-20 h-20)"
         />
       </Link>
 
