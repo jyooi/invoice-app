@@ -8,7 +8,7 @@ type PropType = {
 const MainWrapper = styled.main(() => [tw`flex justify-center`]);
 
 const ResponsiveContainer = styled.div(() => [
-  tw`max-w-[730px] w-full tablet:(mt-[61px]) mobile:(mt-8 mx-6)`,
+  tw`max-w-[730px] w-full tablet:(mt-[61px] mx-12) mt-8 mx-6`,
 ]);
 
 export default function Layout({ children }: PropType) {
