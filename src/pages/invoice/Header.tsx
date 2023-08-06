@@ -5,7 +5,7 @@ import { PopOver } from "~/components/Popover";
 import { Button } from "~/components/Button";
 import { useState } from "react";
 
-export const Header = () => {
+const Header = () => {
   const [isCheck, setIsCheck] = useState(false);
 
   return (
@@ -47,3 +47,5 @@ export const Header = () => {
     </div>
   );
 };
+
+export default Header;

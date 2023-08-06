@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import tw, { styled, css } from "twin.macro";
 import { HeadingS } from "~/components/Typography";
@@ -46,7 +47,7 @@ const Label = styled(HeadingS)(({ status }: { status: PropType["status"] }) => {
   return [statusObj];
 });
 
-export const StatusCard = ({ status }: PropType) => {
+const StatusCard = ({ status }: PropType) => {
   return (
     <Container status={status}>
       <Dot status={status} />
@@ -54,3 +55,5 @@ export const StatusCard = ({ status }: PropType) => {
     </Container>
   );
 };
+
+export default StatusCard;

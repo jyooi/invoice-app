@@ -1,7 +1,7 @@
 // import { api } from "~/utils/api";
 
-import { Header } from "./Header";
-import { Row } from "./Row";
+import Header from "./Header";
+import Row from "./Row";
 // import { StatusCard } from "../components/StatusCard";
 export default function Invoice() {
   // const users = api.user.getAll.useQuery();
