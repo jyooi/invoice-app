@@ -1,5 +1,5 @@
 import tw, { styled, css } from "twin.macro";
-import StatusCard from "../components/StatusCard";
+import StatusCard from "../../components/StatusCard";
 import { Body, HeadingS } from "~/components/Typography";
 import ChevronRightSvg from "../../image/Icons/purple_chevron_right_icon.svg";
 import Image from "next/image";

@@ -1,8 +1,11 @@
 // import { api } from "~/utils/api";
 "use client";
-import Header from "./Header";
+import dynamic from "next/dynamic";
 import Row from "./Row";
 // import { StatusCard } from "../components/StatusCard";
+
+const Header = dynamic(() => import("./Header"), { ssr: false });
+
 export default function Invoice() {
   // const users = api.user.getAll.useQuery();
 

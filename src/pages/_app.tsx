@@ -6,14 +6,14 @@ import { api } from "~/utils/api";
 import "../styles/fonts/league/league.css";
 import { CacheProvider, type EmotionCache } from "@emotion/react";
 import createEmotionCache from "../utils/createEmotionCache";
-import Layout from "./components/layout";
+import Layout from "../components/Layout";
 
 // import { SSRProvider } from "react-aria";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 import { ThemeProvider } from "next-themes";
-import AppBackground from "./components/AppBackground";
+import AppBackground from "../components/AppBackground";
 
 const MyApp: AppType<{
   session: Session | null;
