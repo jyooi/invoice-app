@@ -17,12 +17,7 @@ const Container = styled.nav(() => [
 
 const RightNavItemContainer = styled.div(() => [
   tw`desktop:(flex items-center flex-col justify-evenly) flex items-center flex-row justify-evenly`,
-  css`
-    width: 100%;
-    max-width: 105px;
-    height: 100%;
-    max-height: 105px;
-  `,
+  tw`desktop:(h-full w-full max-h-[141px]) tablet:(h-full w-full max-w-[141px]) h-full w-full max-w-[105px]`,
 ]);
 
 const RightNavItem = styled.div(() => []);

@@ -29,6 +29,7 @@ declare module "next-auth" {
   //   // role: UserRole;
   // }
 }
+import GitHubProvider from "next-auth/providers/github";
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -47,6 +48,10 @@ export const authOptions: NextAuthOptions = {
   },
   adapter: PrismaAdapter(prisma),
   providers: [
+    GitHubProvider({
+      clientId: env.GITHUB_ID,
+      clientSecret: env.GITHUB_SECRET,
+    }),
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
