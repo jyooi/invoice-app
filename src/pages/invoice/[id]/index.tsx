@@ -5,7 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import PurpleChevronLeft from "../../../image/Icons/purple_chevron_left_icon.svg";
 import { HeadingS } from "~/components/Typography";
-import { ActionStatusBar } from "./ActionStatusBar";
+import ActionStatusBar from "./ActionStatusBar";
+import InvoiceDetails from "./InvoiceDetails";
 const Container = styled.div(() => [tw`h-screen`]);
 
 export default function Invoice() {
@@ -20,7 +21,10 @@ export default function Invoice() {
         ></Image>
         <HeadingS>Go back</HeadingS>
       </Link>
-      <ActionStatusBar />
+      <div tw="mb-6">
+        <ActionStatusBar />
+      </div>
+      <InvoiceDetails />
     </Container>
   );
 }

@@ -18,11 +18,11 @@ const StatusGrroup = styled.div(() => [
   tw`desktop:(flex items-center gap-5) tablet:(flex items-center gap-5) flex justify-between items-center`,
 ]);
 
-export const ActionStatusBar = () => {
+const ActionStatusBar = () => {
   return (
     <Card>
       <Container>
-        <StatusGrroup tw="">
+        <StatusGrroup>
           <Body tw="text-[#858BB2] font-medium">Status</Body>
           <StatusCard status="PENDING" />
         </StatusGrroup>
@@ -36,3 +36,5 @@ export const ActionStatusBar = () => {
     </Card>
   );
 };
+
+export default ActionStatusBar;

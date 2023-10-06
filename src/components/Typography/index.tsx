@@ -31,16 +31,19 @@ export const HeadingS = styled.h5(({ variant }: { variant?: boolean }) => [
       `,
 ]);
 
-export const Body = styled.p(({ variant }: { variant?: boolean }) => [
-  tw`text-base font-normal text-08 dark:text-white`,
+export const Body = styled.p(
+  ({ variant, webForm }: { variant?: boolean; webForm?: boolean }) => [
+    tw`text-base font-normal text-08 dark:text-white`,
 
-  variant
-    ? css`
-        line-height: 15px;
-        letter-spacing: -0.25px;
-      `
-    : css`
-        line-height: 18px;
-        letter-spacing: -0.1px;
-      `,
-]);
+    variant
+      ? css`
+          line-height: 15px;
+          letter-spacing: -0.25px;
+        `
+      : css`
+          line-height: 18px;
+          letter-spacing: -0.1px;
+        `,
+    webForm && tw` text-07 font-medium`,
+  ]
+);

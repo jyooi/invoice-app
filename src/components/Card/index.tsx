@@ -2,6 +2,7 @@ import tw, { styled, css } from "twin.macro";
 
 type PropType = {
   children: React.ReactNode;
+  tw?: string;
 };
 
 const Container = styled.div(() => [
