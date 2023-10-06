@@ -7,6 +7,7 @@ import BrandLogo from "../../image/Icons/brand_logo.svg";
 import AvatarSampleImageSvg from "../../image/avatar_sample_image.svg";
 import MoonIconsSvg from "../../image/Icons/moon_icon.svg";
 import { useTheme } from "next-themes";
+import { useSession } from "next-auth/react";
 // Write me a nav bar that able to stick to the right of the page when in on desktop size
 
 // and able to be a hamburger menu when on mobile size
@@ -31,7 +32,9 @@ const BorderLine = styled.div(() => [
 ]);
 
 export const Navbar = () => {
+  const { data: sessionData } = useSession();
   const { theme, setTheme } = useTheme();
+ 
   return (
     <Container>
       <Link href="/">
@@ -50,7 +53,13 @@ export const Navbar = () => {
         </RightNavItem>
         <BorderLine />
         <RoundAvatar
-          src={AvatarSampleImageSvg as string}
+          width={32}
+          height={32}
+          src={
+            sessionData && sessionData?.user?.image
+              ? sessionData.user.image ?? ""
+              : (AvatarSampleImageSvg as string)
+          }
           alt="avatar sample Image"
         />
       </RightNavItemContainer>

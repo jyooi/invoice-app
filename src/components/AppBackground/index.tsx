@@ -1,6 +1,6 @@
 import React from "react";
 
-import tw, { styled } from "twin.macro";
+import tw, { styled  } from "twin.macro";
 
 const Container = styled.div(() => [tw`h-full bg-11 dark:bg-[#141625]`]);
 

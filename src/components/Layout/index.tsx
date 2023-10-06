@@ -1,6 +1,6 @@
 import { Navbar } from "~/components/Navbar";
 import tw, { styled } from "twin.macro";
-
+import { useSession } from "next-auth/react";
 type PropType = {
   children: React.ReactNode;
 };
@@ -12,9 +12,10 @@ const ResponsiveContainer = styled.div(() => [
 ]);
 
 export default function Layout({ children }: PropType) {
+  const { data: sessionData } = useSession();
   return (
     <>
-      <Navbar />
+      {sessionData ? <Navbar /> : null}
       <MainWrapper>
         <ResponsiveContainer>{children}</ResponsiveContainer>
       </MainWrapper>

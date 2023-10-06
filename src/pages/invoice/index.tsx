@@ -3,8 +3,8 @@
 import dynamic from "next/dynamic";
 import EmptyInvoiceSvg from "../../image/empty_invoice.svg";
 import Image from "next/image";
-import Row from "./Row";
-import { Body, HeadingM, HeadingS } from "~/components/Typography";
+// import Row from "./Row";
+import { Body, HeadingM } from "~/components/Typography";
 // import { StatusCard } from "../components/StatusCard";
 
 const Header = dynamic(() => import("./Header"), { ssr: false });
