@@ -30,13 +30,13 @@ const Row = () => {
         </Body>
       </div>
       <div tw="order-1 justify-self-end tablet:justify-self-center desktop:justify-self-center">
-        <Body tw="text-[#858BB2] ">Mellisa Clarke</Body>
+        <Body tw="text-[#858BB2]">Mellisa Clarke</Body>
       </div>
       <div tw="order-5 tablet:justify-self-center desktop:justify-self-center">
         <HeadingS>$ 1,000</HeadingS>
       </div>
       <div tw="order-6 justify-self-end tablet:justify-self-start desktop:justify-self-start ">
-        <StatusCard tw="" status="Paid" />
+        <StatusCard tw="" status="PAID" />
       </div>
       <div tw="order-4 tablet:order-last desktop:order-last">
         <Image

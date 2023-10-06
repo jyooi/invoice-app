@@ -23,8 +23,8 @@ export const ActionStatusBar = () => {
     <Card>
       <Container>
         <StatusGrroup tw="">
-          <Body variant>Status</Body>
-          <StatusCard status="Pending" />
+          <Body tw="text-[#858BB2] font-medium">Status</Body>
+          <StatusCard status="PENDING" />
         </StatusGrroup>
 
         <ActionButtonGroup>
