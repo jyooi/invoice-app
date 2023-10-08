@@ -17,7 +17,7 @@ export default function Invoice() {
   // });
 
   return (
-    <div tw="h-screen">
+    <div tw="">
       <Header />
 
       <div tw="mt-16 flex justify-center items-center flex-col">

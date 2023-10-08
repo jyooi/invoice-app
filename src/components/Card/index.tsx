@@ -7,11 +7,9 @@ type PropType = {
 
 const Container = styled.div(() => [
   tw`rounded-lg bg-white dark:bg-03 p-6`,
+  tw`desktop:(mx-0) tablet:(mx-0) mx-6`,
   css`
     box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.1);
-
-    margin-left: 24px;
-    margin-right: 24px;
   `,
 ]);
 

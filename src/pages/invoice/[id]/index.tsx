@@ -8,7 +8,7 @@ import { HeadingS } from "~/components/Typography";
 import ActionStatusBar from "./ActionStatusBar";
 import InvoiceDetails from "./InvoiceDetails";
 import MobileStickyActionBar from "./MobileStickyActionBar";
-const Container = styled.div(() => [tw`h-screen`]);
+const Container = styled.div(() => [tw`desktop:(h-screen) tablet:(h-screen)`]);
 
 export default function Invoice() {
   // const router = useRouter();
@@ -16,7 +16,10 @@ export default function Invoice() {
   return (
     <>
       <Container>
-        <Link href="/invoice" tw="flex gap-6 mb-[31px]">
+        <Link
+          href="/invoice"
+          tw="flex gap-6 mb-[31px] desktop:(pl-0) tablet:(pl-0) pl-6"
+        >
           <Image
             src={PurpleChevronLeft as string}
             alt="purple chevron left"
