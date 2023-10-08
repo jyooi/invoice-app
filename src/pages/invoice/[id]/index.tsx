@@ -16,10 +16,7 @@ export default function Invoice() {
   return (
     <>
       <Container>
-        <Link
-          href="/invoice"
-          tw="flex gap-6 mb-[31px] desktop:(pl-0) tablet:(pl-0) pl-6"
-        >
+        <Link href="/invoice" tw="flex gap-6 mb-[31px] ">
           <Image
             src={PurpleChevronLeft as string}
             alt="purple chevron left"

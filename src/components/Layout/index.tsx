@@ -5,7 +5,9 @@ type PropType = {
   children: React.ReactNode;
 };
 
-const MainWrapper = styled.main(() => [tw`flex justify-center h-screen`]);
+const MainWrapper = styled.main(() => [
+  tw`flex justify-center desktop:(h-screen) tablet:(h-screen) h-screen`,
+]);
 
 const ResponsiveContainer = styled.div(() => [
   tw`max-w-[730px] w-full tablet:(mt-[61px] mx-12) mt-8 mx-6`,
