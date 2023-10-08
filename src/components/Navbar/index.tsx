@@ -34,7 +34,7 @@ const BorderLine = styled.div(() => [
 export const Navbar = () => {
   const { data: sessionData } = useSession();
   const { theme, setTheme } = useTheme();
- 
+
   return (
     <Container>
       <Link href="/">
@@ -44,25 +44,26 @@ export const Navbar = () => {
           tw="[height:72px] w-full desktop:(w-20 h-20) tablet:(w-20 h-20)"
         />
       </Link>
-
-      <RightNavItemContainer>
-        <RightNavItem
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        >
-          <Image src={MoonIconsSvg as string} alt="moon-icon" />
-        </RightNavItem>
-        <BorderLine />
-        <RoundAvatar
-          width={32}
-          height={32}
-          src={
-            sessionData && sessionData?.user?.image
-              ? sessionData.user.image ?? ""
-              : (AvatarSampleImageSvg as string)
-          }
-          alt="avatar sample Image"
-        />
-      </RightNavItemContainer>
+      {sessionData ? (
+        <RightNavItemContainer>
+          <RightNavItem
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            <Image src={MoonIconsSvg as string} alt="moon-icon" />
+          </RightNavItem>
+          <BorderLine />
+          <RoundAvatar
+            width={32}
+            height={32}
+            src={
+              sessionData && sessionData?.user?.image
+                ? sessionData.user.image ?? ""
+                : (AvatarSampleImageSvg as string)
+            }
+            alt="avatar sample Image"
+          />
+        </RightNavItemContainer>
+      ) : null}
     </Container>
   );
 };
