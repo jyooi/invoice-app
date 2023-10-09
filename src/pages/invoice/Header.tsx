@@ -7,8 +7,11 @@ import { Button } from "~/components/Button";
 import { useState } from "react";
 import { useResponsiveMatch } from "~/utils/lib";
 
+type PropType = {
+  toggleDrawer: () => void;
+};
 
-const Header = () => {
+const Header = ({ toggleDrawer }: PropType) => {
   const [isCheck, setIsCheck] = useState(false);
 
   const { isTablet, isDesktop } = useResponsiveMatch();
@@ -50,7 +53,7 @@ const Header = () => {
           addIcon
           variant="primary"
           label={isTablet || isDesktop ? "New Invoice" : "New"}
-          onClick={() => null}
+          onClick={() => toggleDrawer()}
         />
       </div>
     </div>

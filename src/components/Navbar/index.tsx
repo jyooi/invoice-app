@@ -2,18 +2,19 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import tw, { styled, css } from "twin.macro";
+import tw, { styled } from "twin.macro";
 import BrandLogo from "../../image/Icons/brand_logo.svg";
 import AvatarSampleImageSvg from "../../image/avatar_sample_image.svg";
 import MoonIconsSvg from "../../image/Icons/moon_icon.svg";
 import { useTheme } from "next-themes";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { Button } from "../Button";
 // Write me a nav bar that able to stick to the right of the page when in on desktop size
 
 // and able to be a hamburger menu when on mobile size
 
 const Container = styled.nav(() => [
-  tw`bg-14 desktop:(h-20 flex justify-between items-center flex-col sticky h-screen top-0 float-left flex-nowrap rounded-tr-[20px] rounded-br-[20px]) tablet:h-20 flex justify-between items-center flex-row flex-nowrap`, // responsive query
+  tw`bg-14 desktop:(h-20 flex justify-between items-center flex-col sticky h-screen top-0 float-left flex-nowrap rounded-tr-[20px] rounded-br-[20px]) tablet:h-20 flex justify-between items-center flex-row flex-nowrap z-[102]`, // responsive query
 ]);
 
 const RightNavItemContainer = styled.div(() => [
@@ -63,7 +64,13 @@ export const Navbar = () => {
             alt="avatar sample Image"
           />
         </RightNavItemContainer>
-      ) : null}
+      ) : (
+        <Button
+          variant="primary"
+          onClick={() => void signIn()}
+          label="Log in"
+        />
+      )}
     </Container>
   );
 };
