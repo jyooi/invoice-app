@@ -8,6 +8,7 @@ import Image from "next/image";
 // import Row from "./Row";
 import { Body, HeadingM } from "~/components/Typography";
 import { useResponsiveMatch } from "~/utils/lib";
+import Form from "./Form";
 // import { StatusCard } from "../components/StatusCard";
 
 const Header = dynamic(() => import("./Header"), { ssr: false });
@@ -57,7 +58,7 @@ export default function Invoice() {
           marginTop: isTablet ? 80 : 0,
         }}
       >
-        <h1>Hellow drawer</h1>
+        <Form />
       </Drawer>
     </div>
   );

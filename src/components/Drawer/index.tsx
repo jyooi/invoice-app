@@ -1,5 +1,5 @@
 import ModernDrawer from "react-modern-drawer";
-
+import { useTheme } from "next-themes";
 //import styles 👇
 import "react-modern-drawer/dist/index.css";
 
@@ -20,6 +20,8 @@ export const Drawer = ({
   styles,
   size,
 }: PropType) => {
+  const { theme } = useTheme();
+
   return (
     <ModernDrawer
       open={open}
@@ -29,8 +31,10 @@ export const Drawer = ({
       style={{
         borderBottomRightRadius: 20,
         borderTopRightRadius: 20,
+        background: theme === "dark" ? "#141625" : "#FFF",
         ...styles,
       }}
+      lockBackgroundScroll
     >
       {children}
     </ModernDrawer>

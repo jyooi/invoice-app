@@ -5,6 +5,7 @@ import Image from "next/image";
 import ChevronDownSvgIcon from "../../image/Icons/purple_chevron_down_icon.svg";
 import tw, { styled, css } from "twin.macro";
 import { HeadingS } from "../Typography";
+import { Label } from "../Label";
 
 const ListButton = styled(Listbox.Button)(() => [
   tw`relative w-full cursor-default pl-5 text-left border border-05 rounded border border-05 hover:border-01`,
@@ -16,7 +17,7 @@ const ListButton = styled(Listbox.Button)(() => [
 ]);
 
 const ListOptions = styled(Listbox.Options)(() => [
-  tw`mt-6 max-h-48 w-full overflow-hidden rounded-md text-base shadow-lg ring-1 ring-black ring-opacity-5 hover:overflow-y-auto`,
+  tw`absolute mt-6 max-h-48 w-full overflow-hidden rounded-md text-base shadow-lg ring-1 ring-black ring-opacity-5  hover:overflow-y-auto`,
   css`
     /* width */
     ::-webkit-scrollbar {
@@ -35,11 +36,11 @@ const ListOptions = styled(Listbox.Options)(() => [
   `,
 ]);
 
-const ListBoxContainer = styled.div(() => [tw`fixed top-16 w-52 `]);
+const ListBoxContainer = styled.div(() => [tw`w-full`]);
 
 const ListOption = styled(Listbox.Option)(() => [
-  tw`h-12`,
-  tw`relative cursor-default select-none`,
+  tw`h-12 z-[113]`,
+  tw`relative cursor-default select-none bg-white`,
   tw`border-b dark:border-b-03 dark:bg-03`,
 ]);
 
@@ -52,6 +53,7 @@ type PropType = {
   setSelected: (value: string) => void;
   selected: string;
   options?: Option[];
+  label?: string;
 };
 
 type Option = {
@@ -59,9 +61,10 @@ type Option = {
   name: string;
 };
 
-export function Select({ options, setSelected, selected }: PropType) {
+export function Select({ options, setSelected, selected, label }: PropType) {
   return (
     <ListBoxContainer>
+      <Label>{label}</Label>
       <Listbox value={selected} onChange={setSelected}>
         <div tw="relative mt-1">
           <ListButton>

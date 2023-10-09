@@ -5,7 +5,6 @@ export function useResponsiveMatch() {
   const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1439px)");
   const isDesktop = useMediaQuery("(min-width: 1440px)");
 
-  console.log({ isMobile, isTablet, isDesktop });
   return {
     isMobile,
     isTablet,

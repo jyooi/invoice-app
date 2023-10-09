@@ -13,6 +13,7 @@ import { DateField } from "./DateField";
 import calendarIcon from "../../image/Icons/calendar_icon.svg";
 import Image from "next/image";
 import { FieldButton } from "./FieldButton";
+import { Label } from "../Label";
 
 export const DatePicker = (
   props: DatePickerStateOptions<DateValue> | AriaDatePickerProps<DateValue>
@@ -24,7 +25,7 @@ export const DatePicker = (
   const ref = useRef(null);
   const {
     groupProps,
-    labelProps,
+
     fieldProps,
     buttonProps,
     dialogProps,
@@ -32,14 +33,12 @@ export const DatePicker = (
   } = useDatePicker(props, state, ref);
 
   return (
-    <div tw="relative inline-flex flex-col text-left">
-      <span {...labelProps} tw="text-sm text-gray-800">
-        {props.label}
-      </span>
+    <div tw="relative inline-flex flex-col text-left w-full mt-1">
+      <Label>{props.label}</Label>
       <div
         {...groupProps}
         ref={ref}
-        tw="flex justify-between relative flex h-12 w-52 items-center rounded border border-gray-300 bg-white transition-colors group-focus-within:border-violet-600 group-hover:border-gray-400 pl-5 
+        tw="flex justify-between relative flex h-12 w-full items-center rounded border border-gray-300 bg-white dark:bg-03 transition-colors group-focus-within:border-violet-600 group-hover:border-gray-400 pl-5 
           font-bold border-05 hover:border-01 group-focus-within:group-hover:border-violet-600"
       >
         <div className="group" tw="">

@@ -8,7 +8,7 @@ import { CacheProvider, type EmotionCache } from "@emotion/react";
 import createEmotionCache from "../utils/createEmotionCache";
 import Layout from "../components/Layout";
 
-// import { SSRProvider } from "react-aria";
+import { SSRProvider } from "react-aria";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -23,7 +23,7 @@ const MyApp: AppType<{
   pageProps: { session, emotionCache = clientSideEmotionCache, ...pageProps },
 }) => {
   return (
-    <>
+    <SSRProvider>
       <CacheProvider value={emotionCache}>
         <SessionProvider session={session}>
           <GlobalStyles />
@@ -36,7 +36,7 @@ const MyApp: AppType<{
           </ThemeProvider>
         </SessionProvider>
       </CacheProvider>
-    </>
+    </SSRProvider>
   );
 };
 

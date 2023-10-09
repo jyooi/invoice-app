@@ -1,8 +1,9 @@
 "use client";
 import tw, { styled, css } from "twin.macro";
+import { Label } from "../Label";
 
 const TextInput = styled.input(() => [
-  tw`border-05 border rounded h-12 pl-5 pr-1`,
+  tw`border-05 border rounded h-12 w-full`,
   tw`focus-visible:outline-02 focus-visible:border-0`,
   tw`dark:bg-03 dark:border-04 focus-visible:dark:outline-0`, // Dark config
   tw`text-lg text-08 font-bold dark:text-white`, // textfield font
@@ -16,28 +17,21 @@ const TextInput = styled.input(() => [
   `,
 ]);
 
-const Label = styled.label(
-  () => [tw` text-07 text-base dark:text-05`],
-  css`
-    letter-spacing: -0.1px;
-    line-height: 15px;
-    padding-bottom: 9px;
-  `
-);
-
-const TextFieldGroup = styled.div(() => [tw`flex flex-col caret-01`]);
+const TextFieldGroup = styled.div(() => [
+  tw`flex flex-col caret-01 mb-[25px] w-full`,
+]);
 
 type PropType = {
   label: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
 };
 
-export const TextField = ({ label, onChange, value }: PropType) => {
+export const TextField = (props: PropType) => {
   return (
     <TextFieldGroup>
-      <Label>{label}</Label>
-      <TextInput onChange={onChange} value={value} />
+      <Label>{props.label}</Label>
+      <TextInput onChange={props.onChange} value={props.value} {...props} />
     </TextFieldGroup>
   );
 };
