@@ -6,7 +6,7 @@ const TextInput = styled.input(() => [
   tw`border-05 border rounded h-12 w-full`,
   tw`focus-visible:outline-02 focus-visible:border-0`,
   tw`dark:bg-03 dark:border-04 focus-visible:dark:outline-0`, // Dark config
-  tw`text-lg text-08 font-bold dark:text-white`, // textfield font
+  tw`text-lg text-08 font-bold dark:text-white outline-0`, // textfield font
   css`
     :focus-visible {
       outline-style: solid;

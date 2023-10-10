@@ -13,7 +13,7 @@ const ItemsList = () => {
         <HeadingM> Item List</HeadingM>
       </div>
       <div tw="grid grid-cols-8 place-items-center gap-4 justify-items-start">
-        <div tw="col-span-3">
+        <div tw="col-span-3 ">
           <Body>Item Name</Body>
         </div>
         <div tw="col-span-1">Qty</div>

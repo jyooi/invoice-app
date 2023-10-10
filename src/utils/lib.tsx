@@ -1,3 +1,5 @@
+"use client";
+
 import { useMediaQuery } from "~/hook/useMediaQuery";
 import { useState, useEffect } from "react";
 export function useResponsiveMatch() {
