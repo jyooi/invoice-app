@@ -6,6 +6,7 @@ import { Select } from "~/components/Select";
 import { TextField } from "~/components/TextField";
 import { HeadingS, HeadingM } from "~/components/Typography";
 import { useForm, Controller } from "react-hook-form";
+import ItemsList from "./ItemsList";
 
 const FormContainer = styled.div(() => [
   tw`desktop:(ml-[80px] py-[56px] pr-[59px]) h-full overflow-auto`,
@@ -27,7 +28,11 @@ const Form = () => {
           name="streetAddress"
           control={control}
           render={({ field }) => (
-            <TextField tw="w-full" label="Street Address" {...field} />
+            <TextField
+              tw="w-full mb-[25px]"
+              label="Street Address"
+              {...field}
+            />
           )}
         />
 
@@ -36,31 +41,46 @@ const Form = () => {
             name="city"
             control={control}
             render={({ field }) => (
-              <TextField tw="w-full" label="City" {...field} />
+              <TextField tw="w-full mb-[25px]" label="City" {...field} />
             )}
           />
           <Controller
             name="postCode"
             control={control}
             render={({ field }) => (
-              <TextField tw="w-full" label="Post Code" {...field} />
+              <TextField tw="w-full mb-[25px]" label="Post Code" {...field} />
             )}
           />
           <Controller
             name="country"
             control={control}
             render={({ field }) => (
-              <TextField tw="w-full" label="Country" {...field} />
+              <TextField tw="w-full mb-[25px]" label="Country" {...field} />
             )}
           />
         </div>
 
         <HeadingS tw="text-01 mb-6 dark:text-01">Bill To</HeadingS>
-        <TextField label="Client's Name" onChange={() => null} value="" />
-        <TextField label="Client's Email" onChange={() => null} value="" />
-        <TextField label="Street Address" onChange={() => null} value="" />
+        <TextField
+          tw="mb-[25px]"
+          label="Client's Name"
+          onChange={() => null}
+          value=""
+        />
+        <TextField
+          tw="mb-[25px]"
+          label="Client's Email"
+          onChange={() => null}
+          value=""
+        />
+        <TextField
+          tw="mb-[25px]"
+          label="Street Address"
+          onChange={() => null}
+          value=""
+        />
 
-        <div tw="flex gap-6">
+        <div tw="flex gap-6 mb-[25px]">
           <TextField label="City" onChange={() => null} value="" />
           <TextField label="Post Code" onChange={() => null} value="" />
           <TextField label="Country" onChange={() => null} value="" />
@@ -75,9 +95,15 @@ const Form = () => {
           />
         </div>
 
-        <TextField label="Project Description" onChange={() => null} value="" />
-
-        <input type="submit" />
+        <div tw="mb-[35px]">
+          <TextField
+            label="Project Description"
+            onChange={() => null}
+            value=""
+          />
+        </div>
+        <ItemsList />
+        {/* <input type="submit" /> */}
       </form>
     </FormContainer>
   );

@@ -9,6 +9,7 @@ type ButtonProps = {
   iconBefore?: React.ReactNode;
   addIcon?: boolean;
   label: string;
+  fullWidth?: boolean;
   onClick: () => void;
 };
 
@@ -23,7 +24,13 @@ const Label = styled.span(() => [
 ]);
 
 const ButtonGroup = styled.button(
-  ({ variant }: { variant: ButtonProps["variant"] }) => [
+  ({
+    variant,
+    fullWidth,
+  }: {
+    variant: ButtonProps["variant"];
+    fullWidth: ButtonProps["fullWidth"];
+  }) => [
     variant === "primary" && tw`bg-01 hover:bg-02 text-white`,
 
     variant === "secondary" &&
@@ -36,10 +43,7 @@ const ButtonGroup = styled.button(
 
     variant === "long" && tw`text-07 bg-13 hover:bg-05`,
 
-    variant === "long" &&
-      css`
-        width: 21.875rem;
-      `,
+    fullWidth && tw`w-full`,
 
     tw`h-12 rounded-5xl flex items-center justify-center p-2`,
   ]
@@ -51,9 +55,10 @@ export const Button = ({
   addIcon,
   variant = "primary",
   onClick,
+  fullWidth,
 }: ButtonProps) => {
   return (
-    <ButtonGroup variant={variant} onClick={onClick}>
+    <ButtonGroup variant={variant} onClick={onClick} fullWidth={fullWidth}>
       {iconBefore && <>{iconBefore}</>}
       {addIcon && !iconBefore && (
         <Image src={AddIconSvg as string} alt="add-icon" />

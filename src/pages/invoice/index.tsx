@@ -7,13 +7,14 @@ import { useState } from "react";
 import Image from "next/image";
 // import Row from "./Row";
 import { Body, HeadingM } from "~/components/Typography";
-import { useResponsiveMatch } from "~/utils/lib";
+import useWindowDimensions, { useResponsiveMatch } from "~/utils/lib";
 import Form from "./Form";
 // import { StatusCard } from "../components/StatusCard";
 
 const Header = dynamic(() => import("./Header"), { ssr: false });
 
 export default function Invoice() {
+  const { width } = useWindowDimensions();
   const [addInvoiceDrawerOpen, setAddInvoiceDrawerOpen] = useState(false);
 
   const { isTablet } = useResponsiveMatch();
@@ -52,7 +53,7 @@ export default function Invoice() {
         open={addInvoiceDrawerOpen}
         onClose={toggleDrawer}
         direction="left"
-        size={696}
+        size={width > 696 ? 696 : width}
         styles={{ marginTop: isTablet ? 80 : 0 }}
       >
         <Form />

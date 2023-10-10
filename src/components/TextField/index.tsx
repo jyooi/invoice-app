@@ -17,12 +17,10 @@ const TextInput = styled.input(() => [
   `,
 ]);
 
-const TextFieldGroup = styled.div(() => [
-  tw`flex flex-col caret-01 mb-[25px] w-full`,
-]);
+const TextFieldGroup = styled.div(() => [tw`flex flex-col caret-01 w-full`]);
 
 type PropType = {
-  label: string;
+  label?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
 };
@@ -30,7 +28,7 @@ type PropType = {
 export const TextField = (props: PropType) => {
   return (
     <TextFieldGroup>
-      <Label>{props.label}</Label>
+      {props.label && <Label>{props.label}</Label>}
       <TextInput onChange={props.onChange} value={props.value} {...props} />
     </TextFieldGroup>
   );
