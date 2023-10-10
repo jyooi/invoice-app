@@ -26,8 +26,10 @@ const Form = ({ toggleDrawer }: PropType) => {
 
   const { isMobile } = useResponsiveMatch();
 
+  const onSubmit = (data) => console.log(data);
+
   return (
-    <FormContainer>
+    <FormContainer onSubmit={handleSubmit(onSubmit)}>
       {isMobile && (
         <div
           onClick={() => toggleDrawer()}
@@ -152,6 +154,7 @@ const Form = ({ toggleDrawer }: PropType) => {
               onClick={() => null}
             />
             <Button
+              type="submit"
               variant="primary"
               label="Save & Send"
               onClick={() => null}

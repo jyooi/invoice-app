@@ -7,15 +7,18 @@ import { useState } from "react";
 import Image from "next/image";
 // import Row from "./Row";
 import { Body, HeadingM } from "~/components/Typography";
-import useWindowDimensions, { useResponsiveMatch } from "~/utils/lib";
+import { useResponsiveMatch } from "~/utils/lib";
 import Form from "./Form";
+import { useWindowSize } from "react-use";
+
 // import { StatusCard } from "../components/StatusCard";
 
 const Header = dynamic(() => import("./Header"), { ssr: false });
 
 export default function Invoice() {
-  const { width } = useWindowDimensions();
   const [addInvoiceDrawerOpen, setAddInvoiceDrawerOpen] = useState(false);
+
+  const { width } = useWindowSize();
 
   const { isTablet } = useResponsiveMatch();
 

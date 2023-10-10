@@ -33,6 +33,7 @@
     "react-hook-form": "^7.47.0",
     "react-modern-drawer": "^1.2.2",
     "react-stately": "^3.23.0",
+    "react-use": "^17.4.0",
     "superjson": "1.12.2",
     "zod": "^3.21.4"
   },

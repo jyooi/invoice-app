@@ -11,6 +11,7 @@ type ButtonProps = {
   label: string;
   fullWidth?: boolean;
   onClick: () => void;
+  type?: "button" | "submit" | "reset";
 };
 
 const Label = styled.span(() => [
@@ -56,9 +57,15 @@ export const Button = ({
   variant = "primary",
   onClick,
   fullWidth,
+  type = "button",
 }: ButtonProps) => {
   return (
-    <ButtonGroup variant={variant} onClick={onClick} fullWidth={fullWidth}>
+    <ButtonGroup
+      variant={variant}
+      onClick={onClick}
+      fullWidth={fullWidth}
+      type={type}
+    >
       {iconBefore && <>{iconBefore}</>}
       {addIcon && !iconBefore && (
         <Image src={AddIconSvg as string} alt="add-icon" />
