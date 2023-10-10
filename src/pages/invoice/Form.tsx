@@ -1,3 +1,5 @@
+"use client";
+
 import tw, { styled } from "twin.macro";
 import { DatePicker } from "~/components/DatePicker";
 import { Select } from "~/components/Select";
@@ -6,6 +8,8 @@ import { HeadingS, HeadingM } from "~/components/Typography";
 import { useForm, Controller } from "react-hook-form";
 
 const FormContainer = styled.div(() => [
+  tw`desktop:(ml-[80px] py-[56px] pr-[59px]) h-full overflow-auto`,
+  tw`tablet:(pl-[59px]  py-[56px]) h-full overflow-auto`,
   tw`px-[59px] py-[56px] h-full overflow-auto`,
 ]);
 
@@ -28,9 +32,27 @@ const Form = () => {
         />
 
         <div tw="flex gap-6">
-          <TextField label="City" onChange={() => null} value="" />
-          <TextField label="Post Code" onChange={() => null} value="" />
-          <TextField label="Country" onChange={() => null} value="" />
+          <Controller
+            name="city"
+            control={control}
+            render={({ field }) => (
+              <TextField tw="w-full" label="City" {...field} />
+            )}
+          />
+          <Controller
+            name="postCode"
+            control={control}
+            render={({ field }) => (
+              <TextField tw="w-full" label="Post Code" {...field} />
+            )}
+          />
+          <Controller
+            name="country"
+            control={control}
+            render={({ field }) => (
+              <TextField tw="w-full" label="Country" {...field} />
+            )}
+          />
         </div>
 
         <HeadingS tw="text-01 mb-6 dark:text-01">Bill To</HeadingS>

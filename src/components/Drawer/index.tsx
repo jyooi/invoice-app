@@ -2,6 +2,7 @@ import ModernDrawer from "react-modern-drawer";
 import { useTheme } from "next-themes";
 //import styles 👇
 import "react-modern-drawer/dist/index.css";
+import { useResponsiveMatch } from "~/utils/lib";
 
 type PropType = {
   children: React.ReactNode;

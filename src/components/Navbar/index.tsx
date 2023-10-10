@@ -14,7 +14,8 @@ import { Button } from "../Button";
 // and able to be a hamburger menu when on mobile size
 
 const Container = styled.nav(() => [
-  tw`bg-14 desktop:(h-20 flex justify-between items-center flex-col sticky h-screen top-0 float-left flex-nowrap rounded-tr-[20px] rounded-br-[20px]) tablet:h-20 flex justify-between items-center flex-row flex-nowrap z-[102]`, // responsive query
+  tw`bg-14 desktop:(h-20 flex justify-between items-center flex-col sticky h-screen top-0 float-left flex-nowrap rounded-tr-[20px] rounded-br-[20px]) tablet:(h-20) flex justify-between items-center flex-row flex-nowrap`, // responsive query
+  tw`z-[102]`,
 ]);
 
 const RightNavItemContainer = styled.div(() => [

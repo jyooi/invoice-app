@@ -16,7 +16,7 @@ const Header = dynamic(() => import("./Header"), { ssr: false });
 export default function Invoice() {
   const [addInvoiceDrawerOpen, setAddInvoiceDrawerOpen] = useState(false);
 
-  const { isTablet, isDesktop } = useResponsiveMatch();
+  const { isTablet } = useResponsiveMatch();
 
   // const users = api.user.getAll.useQuery();
 
@@ -53,10 +53,7 @@ export default function Invoice() {
         onClose={toggleDrawer}
         direction="left"
         size={696}
-        styles={{
-          paddingLeft: isDesktop ? 80 : 0,
-          marginTop: isTablet ? 80 : 0,
-        }}
+        styles={{ marginTop: isTablet ? 80 : 0 }}
       >
         <Form />
       </Drawer>
