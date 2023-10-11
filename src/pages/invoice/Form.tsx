@@ -5,11 +5,12 @@ import { DatePicker } from "~/components/DatePicker";
 import { Select } from "~/components/Select";
 import { TextField } from "~/components/TextField";
 import { HeadingS, HeadingM } from "~/components/Typography";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import ItemsList from "./ItemsList";
 import { Button } from "~/components/Button";
 import { useResponsiveMatch } from "~/utils/lib";
 import PurpleChevronLeft from "../../image/Icons/purple_chevron_left_icon.svg";
+import { type Item } from "./index";
 
 const FormContainer = styled.div(() => [
   tw`desktop:(ml-[80px] py-[56px] pr-[59px]) h-full overflow-auto`,
@@ -19,10 +20,17 @@ const FormContainer = styled.div(() => [
 
 type PropType = {
   toggleDrawer: () => void;
+  items: Item[];
+  setItems: (items: Item[]) => void;
 };
 
 const Form = ({ toggleDrawer }: PropType) => {
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, watch } = useForm();
+
+  const { fields, remove, append } = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormContext)
+    name: "itemArray", // unique name for your Field Array
+  });
 
   const { isMobile } = useResponsiveMatch();
 
@@ -143,7 +151,13 @@ const Form = ({ toggleDrawer }: PropType) => {
             )}
           />
         </div>
-        <ItemsList />
+        <ItemsList
+          fields={fields}
+          append={append}
+          remove={remove}
+          control={control}
+          watch={watch}
+        />
         <div tw="mt-[39px] mb-8 flex justify-between">
           <Button variant="secondary" label="Discard" onClick={() => null} />
 

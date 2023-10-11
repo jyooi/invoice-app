@@ -46,14 +46,16 @@ export const Navbar = () => {
           tw="[height:72px] w-full desktop:(w-20 h-20) tablet:(w-20 h-20)"
         />
       </Link>
-      {sessionData ? (
-        <RightNavItemContainer>
-          <RightNavItem
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            <Image src={MoonIconsSvg as string} alt="moon-icon" />
-          </RightNavItem>
-          <BorderLine />
+
+      <RightNavItemContainer>
+        <RightNavItem
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        >
+          <Image src={MoonIconsSvg as string} alt="moon-icon" />
+        </RightNavItem>
+        <BorderLine />
+
+        {sessionData && (
           <RoundAvatar
             width={32}
             height={32}
@@ -64,14 +66,8 @@ export const Navbar = () => {
             }
             alt="avatar sample Image"
           />
-        </RightNavItemContainer>
-      ) : (
-        <Button
-          variant="primary"
-          onClick={() => void signIn()}
-          label="Log in"
-        />
-      )}
+        )}
+      </RightNavItemContainer>
     </Container>
   );
 };
