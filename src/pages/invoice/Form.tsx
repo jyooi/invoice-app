@@ -5,12 +5,17 @@ import { DatePicker } from "~/components/DatePicker";
 import { Select } from "~/components/Select";
 import { TextField } from "~/components/TextField";
 import { HeadingS, HeadingM } from "~/components/Typography";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
+import {
+  useForm,
+  Controller,
+  useFieldArray,
+  type SubmitHandler,
+} from "react-hook-form";
 import ItemsList from "./ItemsList";
 import { Button } from "~/components/Button";
 import { useResponsiveMatch } from "~/utils/lib";
+import { api } from "~/utils/api";
 import PurpleChevronLeft from "../../image/Icons/purple_chevron_left_icon.svg";
-import { useRendersCount } from "react-use";
 
 type PropType = {
   toggleDrawer: () => void;
@@ -25,17 +30,17 @@ type Item = {
 export type InvoiceFormValue = {
   streetAddress: string;
   city: string;
-  postCode: string;
+  postCode: number;
   country: string;
   clientName: string;
   clientEmail: string;
   clientStreetAddress: string;
   clientCity: string;
-  clientPostCode: string;
+  clientPostCode: number;
   clientCountry: string;
   clientProjectDescription: string;
   invoiceDate: string;
-  paymentTerms: string;
+  paymentTerms: number;
   itemArray: Item[];
 };
 
@@ -46,26 +51,25 @@ const FormContainer = styled.div(() => [
 ]);
 
 const Form = ({ toggleDrawer }: PropType) => {
-  const rendersCount = useRendersCount();
-
   const { handleSubmit, control, watch } = useForm<InvoiceFormValue>({
     defaultValues: {
       streetAddress: "",
       city: "",
-      postCode: "",
+      postCode: 0,
       country: "",
       clientName: "",
       clientEmail: "",
       clientStreetAddress: "",
       clientCity: "",
-      clientPostCode: "",
+      clientPostCode: 0,
       clientCountry: "",
       clientProjectDescription: "",
-      invoiceDate: "",
-      paymentTerms: "",
+      invoiceDate: "2020-01-01T00:00:00Z",
+      paymentTerms: 0,
       itemArray: [],
     },
   });
+  const createInvoice = api.invoice.createInvoice.useMutation();
 
   const { fields, remove, append } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
@@ -74,9 +78,16 @@ const Form = ({ toggleDrawer }: PropType) => {
 
   const { isMobile } = useResponsiveMatch();
 
+  const onSubmit: SubmitHandler<InvoiceFormValue> = (data) => {
+    debugger;
+    createInvoice.mutate({
+      ...data,
+      status: "PENDING",
+    });
+  };
+
   return (
-    <FormContainer onSubmit={() => null}>
-      <span>{rendersCount}</span>
+    <FormContainer>
       {isMobile && (
         <div
           onClick={() => toggleDrawer()}
@@ -89,7 +100,7 @@ const Form = ({ toggleDrawer }: PropType) => {
           <HeadingS>Go back</HeadingS>
         </div>
       )}
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <HeadingM tw="mb-[46px]">Edit #XM9141</HeadingM>
 
         <HeadingS tw="text-01 mb-6 dark:text-01">Bill From</HeadingS>
@@ -118,7 +129,13 @@ const Form = ({ toggleDrawer }: PropType) => {
             name="postCode"
             control={control}
             render={({ field }) => (
-              <TextField tw="w-full mb-[25px]" label="Post Code" {...field} />
+              <TextField
+                tw="w-full mb-[25px]"
+                label="Post Code"
+                type="number"
+                {...field}
+                onChange={(event) => field.onChange(+event.target.value)}
+              />
             )}
           />
           <Controller
@@ -163,7 +180,13 @@ const Form = ({ toggleDrawer }: PropType) => {
           <Controller
             name="clientPostCode"
             control={control}
-            render={({ field }) => <TextField label="Post Code" {...field} />}
+            render={({ field }) => (
+              <TextField
+                label="Post Code"
+                {...field}
+                onChange={(event) => field.onChange(+event.target.value)}
+              />
+            )}
           />
           <Controller
             name="clientCountry"
@@ -206,11 +229,13 @@ const Form = ({ toggleDrawer }: PropType) => {
               label="Save as draft"
               onClick={() => null}
             />
+
             <Button
               type="submit"
               variant="primary"
               label="Save & Send"
               onClick={() => null}
+              isLoading={createInvoice.isLoading}
             />
           </div>
         </div>

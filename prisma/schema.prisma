@@ -53,6 +53,8 @@ model Session {
 
 model User {
     id            String    @id @default(cuid())
+    createdAt               DateTime @default(now())
+    updatedAt               DateTime @updatedAt
     name          String?
     email         String?   @unique
     emailVerified DateTime?
@@ -71,18 +73,27 @@ model VerificationToken {
 }
 
 model Invoice {
-    id          String   @id @default(cuid())
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    title       String
-    description String?
-    amount      Int
-    currency    String
-    status      String
-    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId      String
-    items       Item[]
-
+    id                       String   @id @default(cuid())
+    createdAt                DateTime @default(now())
+    updatedAt                DateTime @updatedAt
+    totalAmount              Int
+    status                   String
+    postCode                 Int
+    streetAddress            String
+    city                     String
+    country                  String
+    clientName               String
+    clientEmail              String
+    clientStreetAddress      String
+    clientCity               String
+    clientCountry            String
+    clientPostCode           Int
+    clientProjectDescription String
+    paymentTerms             Int
+    date                     DateTime
+    items                    Item[]
+    userId                   String
+    user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     @@index([userId])
 }
 
@@ -90,10 +101,12 @@ model Item {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    title     String
-    amount    Int
-    invoice   Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+    name     String
+    quantity    Int
+    price     Int
     invoiceId String
+    invoice   Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+   
 
     @@index([invoiceId])
 }

@@ -3,6 +3,7 @@
 import tw, { styled, css } from "twin.macro";
 import Image from "next/image";
 import AddIconSvg from "../../image/Icons/add_icon.svg";
+import { Spinner } from "../Spinner";
 
 type ButtonProps = {
   variant: "primary" | "secondary" | "tertiary" | "alert" | "long";
@@ -12,6 +13,7 @@ type ButtonProps = {
   fullWidth?: boolean;
   onClick: () => void;
   type?: "button" | "submit" | "reset";
+  isLoading?: boolean;
 };
 
 const Label = styled.span(() => [
@@ -58,6 +60,7 @@ export const Button = ({
   onClick,
   fullWidth,
   type = "button",
+  isLoading,
 }: ButtonProps) => {
   return (
     <ButtonGroup
@@ -66,11 +69,18 @@ export const Button = ({
       fullWidth={fullWidth}
       type={type}
     >
-      {iconBefore && <>{iconBefore}</>}
-      {addIcon && !iconBefore && (
-        <Image src={AddIconSvg as string} alt="add-icon" />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          {iconBefore ? (
+            <>{iconBefore}</>
+          ) : addIcon ? (
+            <Image src={AddIconSvg as string} alt="add-icon" />
+          ) : null}
+          <Label tw="p-4">{label}</Label>
+        </>
       )}
-      <Label tw="p-4">{label}</Label>
     </ButtonGroup>
   );
 };

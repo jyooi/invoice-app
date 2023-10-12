@@ -68,6 +68,7 @@ const ItemsList = ({ fields, remove, control, append }: PropType) => {
                     tw="w-full max-w-[46px]"
                     type="number"
                     {...field}
+                    onChange={(event) => field.onChange(+event.target.value)}
                   />
                 )}
               />
@@ -77,7 +78,12 @@ const ItemsList = ({ fields, remove, control, append }: PropType) => {
                 control={control}
                 name={`itemArray.${index}.itemPrice`}
                 render={({ field }) => (
-                  <TextField tw="w-full max-w-[100px]" {...field} />
+                  <TextField
+                    tw="w-full max-w-[100px]"
+                    type="number"
+                    {...field}
+                    onChange={(event) => field.onChange(+event.target.value)}
+                  />
                 )}
               />
             </div>

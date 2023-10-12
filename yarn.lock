@@ -5264,6 +5264,11 @@ react-modern-drawer@^1.2.2:
   resolved "https://registry.yarnpkg.com/react-modern-drawer/-/react-modern-drawer-1.2.2.tgz#cee2d3355a1ac7ac0842d3fba33a28cd8f7f2464"
   integrity sha512-SXUNjofHzeoEas0kdMWWafuF2+vwdtbQD1cpkHxo7oyFj3v+2l2CMeJjc/GodYsnxVhSiYj75xosMJXXed9ykQ==
 
+react-spinners@^0.13.8:
+  version "0.13.8"
+  resolved "https://registry.yarnpkg.com/react-spinners/-/react-spinners-0.13.8.tgz#5262571be0f745d86bbd49a1e6b49f9f9cb19acc"
+  integrity sha512-3e+k56lUkPj0vb5NDXPVFAOkPC//XyhKPJjvcGjyMNPWsBKpplfeyialP74G7H7+It7KzhtET+MvGqbKgAqpZA==
+
 react-ssr-prepass@^1.5.0:
   version "1.5.0"
   resolved "https://registry.npmjs.org/react-ssr-prepass/-/react-ssr-prepass-1.5.0.tgz"
