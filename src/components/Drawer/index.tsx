@@ -1,3 +1,5 @@
+"use client";
+
 import ModernDrawer from "react-modern-drawer";
 import { useTheme } from "next-themes";
 //import styles 👇

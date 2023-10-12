@@ -10,7 +10,34 @@ import ItemsList from "./ItemsList";
 import { Button } from "~/components/Button";
 import { useResponsiveMatch } from "~/utils/lib";
 import PurpleChevronLeft from "../../image/Icons/purple_chevron_left_icon.svg";
-import { type Item } from "./index";
+import { useRendersCount } from "react-use";
+
+type PropType = {
+  toggleDrawer: () => void;
+};
+
+type Item = {
+  itemName: string;
+  itemQuantity: number;
+  itemPrice: number;
+};
+
+export type InvoiceFormValue = {
+  streetAddress: string;
+  city: string;
+  postCode: string;
+  country: string;
+  clientName: string;
+  clientEmail: string;
+  clientStreetAddress: string;
+  clientCity: string;
+  clientPostCode: string;
+  clientCountry: string;
+  clientProjectDescription: string;
+  invoiceDate: string;
+  paymentTerms: string;
+  itemArray: Item[];
+};
 
 const FormContainer = styled.div(() => [
   tw`desktop:(ml-[80px] py-[56px] pr-[59px]) h-full overflow-auto`,
@@ -18,14 +45,27 @@ const FormContainer = styled.div(() => [
   tw`px-[59px] py-[56px] h-full overflow-auto`,
 ]);
 
-type PropType = {
-  toggleDrawer: () => void;
-  items: Item[];
-  setItems: (items: Item[]) => void;
-};
-
 const Form = ({ toggleDrawer }: PropType) => {
-  const { handleSubmit, control, watch } = useForm();
+  const rendersCount = useRendersCount();
+
+  const { handleSubmit, control, watch } = useForm<InvoiceFormValue>({
+    defaultValues: {
+      streetAddress: "",
+      city: "",
+      postCode: "",
+      country: "",
+      clientName: "",
+      clientEmail: "",
+      clientStreetAddress: "",
+      clientCity: "",
+      clientPostCode: "",
+      clientCountry: "",
+      clientProjectDescription: "",
+      invoiceDate: "",
+      paymentTerms: "",
+      itemArray: [],
+    },
+  });
 
   const { fields, remove, append } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
@@ -34,10 +74,9 @@ const Form = ({ toggleDrawer }: PropType) => {
 
   const { isMobile } = useResponsiveMatch();
 
-  const onSubmit = (data) => console.log(data);
-
   return (
-    <FormContainer onSubmit={handleSubmit(onSubmit)}>
+    <FormContainer onSubmit={() => null}>
+      <span>{rendersCount}</span>
       {isMobile && (
         <div
           onClick={() => toggleDrawer()}

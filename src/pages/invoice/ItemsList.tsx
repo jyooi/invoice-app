@@ -8,25 +8,28 @@ import TrashIcon from "../../image/Icons/grey_trash_icon.svg";
 import {
   type Control,
   Controller,
-  type FieldValues,
   type UseFieldArrayRemove,
   type UseFieldArrayAppend,
   type UseFormWatch,
+  useWatch,
 } from "react-hook-form";
-import { type Item } from "./index";
+import { type InvoiceFormValue } from "./Form";
 
 const Container = styled.div(() => [tw``]);
 
 type PropType = {
   fields: Record<"id", string>[];
-  append: UseFieldArrayAppend<FieldValues, "itemArray">;
+  append: UseFieldArrayAppend<InvoiceFormValue, "itemArray">;
   remove: UseFieldArrayRemove;
-  control: Control<FieldValues, Item>;
-  watch: UseFormWatch<FieldValues>;
+  control: Control<InvoiceFormValue>;
+  watch: UseFormWatch<InvoiceFormValue>;
 };
 
-const ItemsList = ({ fields, remove, control, append, watch }: PropType) => {
-  console.log(watch().itemArray);
+const ItemsList = ({ fields, remove, control, append }: PropType) => {
+  const watch = useWatch({
+    control,
+    name: "itemArray",
+  });
   return (
     <Container>
       <div tw="mb-[14px]">
@@ -42,14 +45,14 @@ const ItemsList = ({ fields, remove, control, append, watch }: PropType) => {
           <div tw="col-span-1">Total</div>
           <div tw="col-span-1"></div>
         </div>
-        {fields?.map((item, index) => (
+        {fields.map((item, index) => (
           <div
             key={item.id}
             tw="col-span-8 grid grid-cols-8 place-items-center gap-4 justify-items-start"
           >
             <div tw="col-span-3">
               <Controller
-                name={`itemArray[${index}].itemName`}
+                name={`itemArray.${index}.itemName`}
                 control={control}
                 render={({ field }) => (
                   <TextField tw="w-full max-w-[214px]" {...field} />
@@ -58,25 +61,29 @@ const ItemsList = ({ fields, remove, control, append, watch }: PropType) => {
             </div>
             <div tw="col-span-1">
               <Controller
-                name={`itemArray[${index}].itemQuantity`}
                 control={control}
+                name={`itemArray.${index}.itemQuantity`}
                 render={({ field }) => (
-                  <TextField tw="w-full max-w-[46px]" {...field} />
+                  <TextField
+                    tw="w-full max-w-[46px]"
+                    type="number"
+                    {...field}
+                  />
                 )}
               />
             </div>
             <div tw="col-span-2">
               <Controller
-                name={`itemArray[${index}].itemPrice`}
                 control={control}
+                name={`itemArray.${index}.itemPrice`}
                 render={({ field }) => (
                   <TextField tw="w-full max-w-[100px]" {...field} />
                 )}
               />
             </div>
             <div tw="col-span-1 h-12 flex items-center">
-              {watch().itemArray?.[index]?.itemQuantity *
-                watch().itemArray?.[index]?.itemPrice}
+              {(Number(watch[index]?.itemPrice) ?? 0) *
+                (Number(watch?.[index]?.itemQuantity) ?? 0)}
             </div>
             <div
               tw="col-span-1 place-self-end h-12 flex items-center"
@@ -93,7 +100,7 @@ const ItemsList = ({ fields, remove, control, append, watch }: PropType) => {
           label="+ Add New Item"
           fullWidth
           onClick={() =>
-            append({ name: "", itemName: "", itemQuantity: "", itemPrice: "" })
+            append({ itemName: "", itemQuantity: 0, itemPrice: 0 })
           }
         />
       </div>

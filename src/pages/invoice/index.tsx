@@ -15,17 +15,7 @@ import { useWindowSize } from "react-use";
 
 const Header = dynamic(() => import("./Header"), { ssr: false });
 
-export type Item = {
-  id: string;
-  name: string;
-  qty: number;
-  price: number;
-  total: number;
-};
-
 export default function Invoice() {
-  const [items, setItems] = useState<Item[]>([]);
-
   const [addInvoiceDrawerOpen, setAddInvoiceDrawerOpen] = useState(false);
 
   const { width } = useWindowSize();
@@ -69,7 +59,7 @@ export default function Invoice() {
         size={width > 696 ? 696 : width}
         styles={{ marginTop: isTablet ? 80 : 0 }}
       >
-        <Form toggleDrawer={toggleDrawer} items={items} setItems={setItems} />
+        <Form toggleDrawer={toggleDrawer} />
       </Drawer>
     </div>
   );

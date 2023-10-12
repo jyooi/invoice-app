@@ -1,6 +1,7 @@
 "use client";
 import tw, { styled, css } from "twin.macro";
 import { Label } from "../Label";
+import { type HTMLInputTypeAttribute } from "react";
 
 const TextInput = styled.input(() => [
   tw`border-05 border rounded h-12 w-full`,
@@ -22,14 +23,14 @@ const TextFieldGroup = styled.div(() => [tw`flex flex-col caret-01 w-full`]);
 type PropType = {
   label?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: string;
+  type?: HTMLInputTypeAttribute;
 };
 
 export const TextField = (props: PropType) => {
   return (
     <TextFieldGroup>
       {props.label && <Label>{props.label}</Label>}
-      <TextInput onChange={props.onChange} value={props.value} {...props} />
+      <TextInput onChange={props.onChange} {...props} />
     </TextFieldGroup>
   );
 };
