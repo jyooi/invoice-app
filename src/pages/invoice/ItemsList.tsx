@@ -47,8 +47,8 @@ const ItemsList = ({ fields, remove, control, append }: PropType) => {
         </div>
         {fields.map((item, index) => (
           <div
-            key={item.id}
             tw="col-span-8 grid grid-cols-8 place-items-center gap-4 justify-items-start"
+            key={item.id}
           >
             <div tw="col-span-3">
               <Controller
@@ -66,7 +66,6 @@ const ItemsList = ({ fields, remove, control, append }: PropType) => {
                 render={({ field }) => (
                   <TextField
                     tw="w-full max-w-[46px]"
-                    type="number"
                     {...field}
                     onChange={(event) => field.onChange(+event.target.value)}
                   />
@@ -80,7 +79,6 @@ const ItemsList = ({ fields, remove, control, append }: PropType) => {
                 render={({ field }) => (
                   <TextField
                     tw="w-full max-w-[100px]"
-                    type="number"
                     {...field}
                     onChange={(event) => field.onChange(+event.target.value)}
                   />
@@ -89,7 +87,7 @@ const ItemsList = ({ fields, remove, control, append }: PropType) => {
             </div>
             <div tw="col-span-1 h-12 flex items-center">
               {(Number(watch[index]?.itemPrice) ?? 0) *
-                (Number(watch?.[index]?.itemQuantity) ?? 0)}
+                (Number(watch[index]?.itemQuantity) ?? 0)}
             </div>
             <div
               tw="col-span-1 place-self-end h-12 flex items-center"

@@ -8,7 +8,7 @@ import { HeadingS } from "../Typography";
 import { Label } from "../Label";
 
 const ListButton = styled(Listbox.Button)(() => [
-  tw`relative w-full cursor-default pl-5 text-left border border-05 rounded border border-05 hover:border-01`,
+  tw`relative w-full cursor-default pl-5 text-left border border-05 rounded border border-05 hover:border-01 h-12`,
   tw`dark:border-04 dark:bg-03 text-white`,
   css`
     padding-top: 18px;
@@ -36,7 +36,7 @@ const ListOptions = styled(Listbox.Options)(() => [
   `,
 ]);
 
-const ListBoxContainer = styled.div(() => [tw`w-full`]);
+const ListBoxContainer = styled.div(() => [tw`w-full h-12`]);
 
 const ListOption = styled(Listbox.Option)(() => [
   tw`h-12 z-[113]`,
@@ -51,14 +51,14 @@ const SelectedLabel = styled(HeadingS)(() => [
 
 type PropType = {
   setSelected: (value: string) => void;
-  selected: string;
+  selected: string | null | undefined;
   options?: Option[];
   label?: string;
 };
 
-type Option = {
-  id: string;
-  name: string;
+export type Option = {
+  key: string;
+  value: unknown;
 };
 
 export function Select({ options, setSelected, selected, label }: PropType) {
@@ -68,7 +68,9 @@ export function Select({ options, setSelected, selected, label }: PropType) {
       <Listbox value={selected} onChange={setSelected}>
         <div tw="relative mt-1">
           <ListButton>
-            <HeadingS variant>{selected}</HeadingS>
+            <HeadingS variant>
+              {options?.find((option) => option.value === selected)?.key}
+            </HeadingS>
             <span tw="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
               <Image
                 src={ChevronDownSvgIcon as string}
@@ -83,9 +85,9 @@ export function Select({ options, setSelected, selected, label }: PropType) {
             leaveTo="opacity-0"
           >
             <ListOptions>
-              {options?.map(({ id, name }) => (
-                <ListOption key={id} value={name}>
-                  <SelectedLabel variant>{name}</SelectedLabel>
+              {options?.map(({ key, value }) => (
+                <ListOption key={key} value={value}>
+                  <SelectedLabel variant>{key}</SelectedLabel>
                 </ListOption>
               ))}
             </ListOptions>

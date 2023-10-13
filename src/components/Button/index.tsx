@@ -70,7 +70,7 @@ export const Button = ({
       type={type}
     >
       {isLoading ? (
-        <Spinner />
+        <Spinner size={20} />
       ) : (
         <>
           {iconBefore ? (

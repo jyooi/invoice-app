@@ -78,7 +78,7 @@ model Invoice {
     updatedAt                DateTime @updatedAt
     totalAmount              Int
     status                   String
-    postCode                 Int
+    postCode                 String
     streetAddress            String
     city                     String
     country                  String
@@ -87,7 +87,7 @@ model Invoice {
     clientStreetAddress      String
     clientCity               String
     clientCountry            String
-    clientPostCode           Int
+    clientPostCode           String
     clientProjectDescription String
     paymentTerms             Int
     date                     DateTime

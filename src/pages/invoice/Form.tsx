@@ -1,8 +1,10 @@
 "use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import tw, { styled } from "twin.macro";
 import { DatePicker } from "~/components/DatePicker";
-import { Select } from "~/components/Select";
+import { Select, type Option } from "~/components/Select";
 import { TextField } from "~/components/TextField";
 import { HeadingS, HeadingM } from "~/components/Typography";
 import {
@@ -30,13 +32,13 @@ type Item = {
 export type InvoiceFormValue = {
   streetAddress: string;
   city: string;
-  postCode: number;
+  postCode: string;
   country: string;
   clientName: string;
   clientEmail: string;
   clientStreetAddress: string;
   clientCity: string;
-  clientPostCode: number;
+  clientPostCode: string;
   clientCountry: string;
   clientProjectDescription: string;
   invoiceDate: string;
@@ -55,33 +57,39 @@ const Form = ({ toggleDrawer }: PropType) => {
     defaultValues: {
       streetAddress: "",
       city: "",
-      postCode: 0,
+      postCode: "",
       country: "",
       clientName: "",
       clientEmail: "",
       clientStreetAddress: "",
       clientCity: "",
-      clientPostCode: 0,
+      clientPostCode: "",
       clientCountry: "",
       clientProjectDescription: "",
       invoiceDate: "2020-01-01T00:00:00Z",
-      paymentTerms: 0,
       itemArray: [],
     },
   });
+  // tract state for Select and DatePicker
+
+  const [paymentTerms, setPaymentTerms] = useState("");
+  const [invoiceDate, setInvoiceDate] = useState(new Date());
+
+  // tract state for Select and DatePicker
+
   const createInvoice = api.invoice.createInvoice.useMutation();
 
   const { fields, remove, append } = useFieldArray({
-    control, // control props comes from useForm (optional: if you are using FormContext)
+    control,
     name: "itemArray", // unique name for your Field Array
   });
 
   const { isMobile } = useResponsiveMatch();
 
   const onSubmit: SubmitHandler<InvoiceFormValue> = (data) => {
-    debugger;
     createInvoice.mutate({
       ...data,
+      paymentTerms: Number(paymentTerms),
       status: "PENDING",
     });
   };
@@ -132,7 +140,6 @@ const Form = ({ toggleDrawer }: PropType) => {
               <TextField
                 tw="w-full mb-[25px]"
                 label="Post Code"
-                type="number"
                 {...field}
                 onChange={(event) => field.onChange(+event.target.value)}
               />
@@ -198,9 +205,13 @@ const Form = ({ toggleDrawer }: PropType) => {
           <DatePicker label="Invoice Date" />
           <Select
             label="Paynment Terms"
-            options={[{ id: "Net 1 day", name: "Net 1 day" }]}
-            selected={"123"}
-            setSelected={() => null}
+            options={[
+              { key: "Net 1 day", value: 1 },
+              { key: "Net 10 days", value: 10 },
+              { key: "Net 30 days", value: 30 },
+            ]}
+            selected={paymentTerms}
+            setSelected={setPaymentTerms}
           />
         </div>
 
