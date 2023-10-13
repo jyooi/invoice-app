@@ -24,6 +24,8 @@ type PropType = {
   label?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: HTMLInputTypeAttribute;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ref?: any;
 };
 
 export const TextField = (props: PropType) => {

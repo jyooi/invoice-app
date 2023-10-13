@@ -86,7 +86,7 @@ const Form = ({ toggleDrawer }: PropType) => {
 
   const { isMobile } = useResponsiveMatch();
 
-  const onSubmit: SubmitHandler<InvoiceFormValue> = (data) => {
+  const onSubmit = async (data: InvoiceFormValue) => {
     createInvoice.mutate({
       ...data,
       paymentTerms: Number(paymentTerms),
@@ -121,6 +121,7 @@ const Form = ({ toggleDrawer }: PropType) => {
               tw="w-full mb-[25px]"
               label="Street Address"
               {...field}
+              ref={null}
             />
           )}
         />
@@ -130,7 +131,12 @@ const Form = ({ toggleDrawer }: PropType) => {
             name="city"
             control={control}
             render={({ field }) => (
-              <TextField tw="w-full mb-[25px]" label="City" {...field} />
+              <TextField
+                tw="w-full mb-[25px]"
+                label="City"
+                {...field}
+                ref={null}
+              />
             )}
           />
           <Controller
@@ -141,7 +147,7 @@ const Form = ({ toggleDrawer }: PropType) => {
                 tw="w-full mb-[25px]"
                 label="Post Code"
                 {...field}
-                onChange={(event) => field.onChange(+event.target.value)}
+                ref={null}
               />
             )}
           />
@@ -149,7 +155,12 @@ const Form = ({ toggleDrawer }: PropType) => {
             name="country"
             control={control}
             render={({ field }) => (
-              <TextField tw="w-full mb-[25px]" label="Country" {...field} />
+              <TextField
+                tw="w-full mb-[25px]"
+                label="Country"
+                {...field}
+                ref={null}
+              />
             )}
           />
         </div>
@@ -160,21 +171,36 @@ const Form = ({ toggleDrawer }: PropType) => {
           name="clientName"
           control={control}
           render={({ field }) => (
-            <TextField tw="mb-[25px]" label="Client's Name" {...field} />
+            <TextField
+              tw="mb-[25px]"
+              label="Client's Name"
+              {...field}
+              ref={null}
+            />
           )}
         />
         <Controller
           name="clientEmail"
           control={control}
           render={({ field }) => (
-            <TextField tw="mb-[25px]" label="Client's Email" {...field} />
+            <TextField
+              tw="mb-[25px]"
+              label="Client's Email"
+              {...field}
+              ref={null}
+            />
           )}
         />
         <Controller
           name="clientStreetAddress"
           control={control}
           render={({ field }) => (
-            <TextField tw="mb-[25px]" label="Street Address" {...field} />
+            <TextField
+              tw="mb-[25px]"
+              label="Street Address"
+              {...field}
+              ref={null}
+            />
           )}
         />
 
@@ -182,7 +208,9 @@ const Form = ({ toggleDrawer }: PropType) => {
           <Controller
             name="clientCity"
             control={control}
-            render={({ field }) => <TextField label="City" {...field} />}
+            render={({ field }) => (
+              <TextField label="City" {...field} ref={null} />
+            )}
           />
           <Controller
             name="clientPostCode"
@@ -192,13 +220,16 @@ const Form = ({ toggleDrawer }: PropType) => {
                 label="Post Code"
                 {...field}
                 onChange={(event) => field.onChange(+event.target.value)}
+                ref={null}
               />
             )}
           />
           <Controller
             name="clientCountry"
             control={control}
-            render={({ field }) => <TextField label="Country" {...field} />}
+            render={({ field }) => (
+              <TextField label="Country" {...field} ref={null} />
+            )}
           />
         </div>
         <div tw="flex gap-6 mb-[25px]">
@@ -220,7 +251,7 @@ const Form = ({ toggleDrawer }: PropType) => {
             name="clientProjectDescription"
             control={control}
             render={({ field }) => (
-              <TextField label="Project Description" {...field} />
+              <TextField label="Project Description" {...field} ref={null} />
             )}
           />
         </div>
