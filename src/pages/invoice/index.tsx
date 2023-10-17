@@ -10,12 +10,26 @@ import { Body, HeadingM } from "~/components/Typography";
 import { useResponsiveMatch } from "~/utils/lib";
 import Form from "./Form";
 import { useWindowSize } from "react-use";
-
+import { api } from "~/utils/api";
 // import { StatusCard } from "../components/StatusCard";
 
 const Header = dynamic(() => import("./Header"), { ssr: false });
 
+export type InvoiceStatusFilter = {
+  DRAFT: boolean;
+  PENDING: boolean;
+  PAID: boolean;
+};
+
 export default function Invoice() {
+  const [invoiceStatusFilter, setInvoiceStatusFilter] =
+    useState<InvoiceStatusFilter>({ DRAFT: true, PENDING: true, PAID: true });
+
+  // get all invoice api
+  const invoices = api.invoice.getAllInvoice.useQuery();
+
+  console.log(invoices);
+
   const [addInvoiceDrawerOpen, setAddInvoiceDrawerOpen] = useState(false);
 
   const { width } = useWindowSize();
@@ -34,7 +48,11 @@ export default function Invoice() {
 
   return (
     <div tw="">
-      <Header toggleDrawer={toggleDrawer} />
+      <Header
+        toggleDrawer={toggleDrawer}
+        invoiceStatusFilter={invoiceStatusFilter}
+        setInvoiceStatusFilter={setInvoiceStatusFilter}
+      />
 
       <div tw="mt-16 flex justify-center items-center flex-col">
         <Image

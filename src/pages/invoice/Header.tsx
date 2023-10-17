@@ -6,14 +6,20 @@ import { PopOver } from "~/components/Popover";
 import { Button } from "~/components/Button";
 import { useState } from "react";
 import { useResponsiveMatch } from "~/utils/lib";
-
+import { type InvoiceStatusFilter } from "./index";
 type PropType = {
   toggleDrawer: () => void;
+  invoiceStatusFilter: InvoiceStatusFilter;
+  setInvoiceStatusFilter: React.Dispatch<
+    React.SetStateAction<InvoiceStatusFilter>
+  >;
 };
 
-const Header = ({ toggleDrawer }: PropType) => {
-  const [isCheck, setIsCheck] = useState(false);
-
+const Header = ({
+  toggleDrawer,
+  invoiceStatusFilter,
+  setInvoiceStatusFilter,
+}: PropType) => {
   const { isTablet, isDesktop } = useResponsiveMatch();
 
   return (
@@ -32,18 +38,33 @@ const Header = ({ toggleDrawer }: PropType) => {
           <div tw="w-48 h-32 p-[24px]">
             <div tw="flex flex-col gap-4">
               <Checkbox
-                setIsChecked={setIsCheck}
-                isChecked={isCheck}
+                setIsChecked={() =>
+                  setInvoiceStatusFilter((prev) => ({
+                    ...prev,
+                    DRAFT: !prev.DRAFT,
+                  }))
+                }
+                isChecked={invoiceStatusFilter.DRAFT}
                 label="Draft"
               />
               <Checkbox
-                setIsChecked={setIsCheck}
-                isChecked={isCheck}
+                setIsChecked={() =>
+                  setInvoiceStatusFilter((prev) => ({
+                    ...prev,
+                    PENDING: !prev.PENDING,
+                  }))
+                }
+                isChecked={invoiceStatusFilter.PENDING}
                 label="Pending"
               />
               <Checkbox
-                setIsChecked={setIsCheck}
-                isChecked={isCheck}
+                setIsChecked={() =>
+                  setInvoiceStatusFilter((prev) => ({
+                    ...prev,
+                    PAID: !prev.PAID,
+                  }))
+                }
+                isChecked={invoiceStatusFilter.PAID}
                 label="Paid"
               />
             </div>

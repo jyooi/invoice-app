@@ -1,20 +1,8 @@
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const invoiceRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
   createInvoice: protectedProcedure
     .input(
       z.object({
@@ -81,12 +69,26 @@ export const invoiceRouter = createTRPCRouter({
     }),
 
   getAllInvoice: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.invoice.findMany();
+    return ctx.prisma.invoice.findMany({
+      where: {
+        user: {
+          id: ctx.session.user.id,
+        },
+      },
+      include: {
+        items: true,
+      },
+    });
   }),
 
   getOneInvoice: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
-      return ctx.prisma.invoice.findUnique({ where: { id: input.id } });
+      return ctx.prisma.invoice.findUnique({
+        where: { id: input.id, user: { id: ctx.session.user.id } },
+        include: {
+          items: true,
+        },
+      });
     }),
 });

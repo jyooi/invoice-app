@@ -92,7 +92,7 @@ const Form = ({
 
   const { isMobile } = useResponsiveMatch();
 
-  const onSubmit = async (data: InvoiceFormValue) => {
+  const onSubmit = (data: InvoiceFormValue) => {
     // update invoiceDate
     if (!newInvoice) {
     }
