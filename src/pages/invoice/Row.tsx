@@ -1,3 +1,5 @@
+"use client";
+
 import tw, { styled, css } from "twin.macro";
 import StatusCard, { type InoviceStatus } from "../../components/StatusCard";
 import { Body, HeadingS } from "~/components/Typography";
