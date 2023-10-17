@@ -13,6 +13,8 @@ const clientSideEmotionCache = createEmotionCache();
 
 import { ThemeProvider } from "next-themes";
 import AppBackground from "../components/AppBackground";
+import { SSRProvider } from "react-aria";
+import { FormProvider, useForm } from "react-hook-form";
 
 const MyApp: AppType<{
   session: Session | null;
@@ -21,21 +23,24 @@ const MyApp: AppType<{
   Component,
   pageProps: { session, emotionCache = clientSideEmotionCache, ...pageProps },
 }) => {
+  const methods = useForm();
   return (
-    <>
+    <SSRProvider>
       <CacheProvider value={emotionCache}>
         <SessionProvider session={session}>
           <GlobalStyles />
           <ThemeProvider attribute="class">
             <AppBackground>
               <Layout>
-                <Component {...pageProps} />
+                <FormProvider {...methods}>
+                  <Component {...pageProps} />
+                </FormProvider>
               </Layout>
             </AppBackground>
           </ThemeProvider>
         </SessionProvider>
       </CacheProvider>
-    </>
+    </SSRProvider>
   );
 };
 

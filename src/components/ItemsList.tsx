@@ -1,10 +1,10 @@
-import tw, { styled } from "twin.macro";
+"use client";
+
 import Image from "next/image";
 import { TextField } from "~/components/TextField";
 import { Button } from "~/components/Button";
 import { Body, HeadingM } from "~/components/Typography";
-import TrashIcon from "../../image/Icons/grey_trash_icon.svg";
-
+import TrashIcon from "../image/Icons/grey_trash_icon.svg";
 import {
   type Control,
   Controller,
@@ -13,9 +13,7 @@ import {
   type UseFormWatch,
   useWatch,
 } from "react-hook-form";
-import { type InvoiceFormValue } from "./Form";
-
-const Container = styled.div(() => [tw``]);
+import { type InvoiceFormValue } from "../pages/invoice/Form";
 
 type PropType = {
   fields: Record<"id", string>[];
@@ -30,8 +28,9 @@ const ItemsList = ({ fields, remove, control, append }: PropType) => {
     control,
     name: "itemArray",
   });
+
   return (
-    <Container>
+    <>
       <div tw="mb-[14px]">
         <HeadingM> Item List</HeadingM>
       </div>
@@ -110,8 +109,10 @@ const ItemsList = ({ fields, remove, control, append }: PropType) => {
           }
         />
       </div>
-    </Container>
+    </>
   );
 };
+
+// This also gets called at build time
 
 export default ItemsList;

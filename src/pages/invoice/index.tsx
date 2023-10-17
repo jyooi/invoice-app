@@ -8,14 +8,13 @@ import Image from "next/image";
 import Row from "./Row";
 import { Body, HeadingM } from "~/components/Typography";
 import { useResponsiveMatch } from "~/utils/lib";
-import Form from "./Form";
 import { useWindowSize } from "react-use";
 import { api } from "~/utils/api";
 import { Spinner } from "~/components/Spinner";
 import { useRouter } from "next/router";
 
 const Header = dynamic(() => import("./Header"), { ssr: false });
-
+const Form = dynamic(() => import("./Form"), { ssr: false });
 export type InvoiceStatusFilter = {
   DRAFT: boolean;
   PENDING: boolean;

@@ -38,7 +38,7 @@ const Row = ({
     <Container onClick={() => onRowClick?.()}>
       <div tw="order-first">
         <HeadingS tw="text-07">
-          <span># {invoiceId.slice(0, 6).toUpperCase()}...</span>
+          <span># {invoiceId?.slice(0, 6).toUpperCase()}...</span>
         </HeadingS>
       </div>
       <div tw="order-3">

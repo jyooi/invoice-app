@@ -48,30 +48,30 @@ const Header = ({
                 setIsChecked={() =>
                   setInvoiceStatusFilter((prev) => ({
                     ...prev,
-                    DRAFT: !prev.DRAFT,
+                    DRAFT: !prev?.DRAFT,
                   }))
                 }
-                isChecked={invoiceStatusFilter.DRAFT}
+                isChecked={invoiceStatusFilter?.DRAFT}
                 label="Draft"
               />
               <Checkbox
                 setIsChecked={() =>
                   setInvoiceStatusFilter((prev) => ({
                     ...prev,
-                    PENDING: !prev.PENDING,
+                    PENDING: !prev?.PENDING,
                   }))
                 }
-                isChecked={invoiceStatusFilter.PENDING}
+                isChecked={invoiceStatusFilter?.PENDING}
                 label="Pending"
               />
               <Checkbox
                 setIsChecked={() =>
                   setInvoiceStatusFilter((prev) => ({
                     ...prev,
-                    PAID: !prev.PAID,
+                    PAID: !prev?.PAID,
                   }))
                 }
-                isChecked={invoiceStatusFilter.PAID}
+                isChecked={invoiceStatusFilter?.PAID}
                 label="Paid"
               />
             </div>

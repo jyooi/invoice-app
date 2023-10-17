@@ -8,7 +8,7 @@ import { Select } from "~/components/Select";
 import { TextField } from "~/components/TextField";
 import { HeadingS, HeadingM } from "~/components/Typography";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
-import ItemsList from "./ItemsList";
+
 import { Button } from "~/components/Button";
 import { useResponsiveMatch } from "~/utils/lib";
 import { api } from "~/utils/api";
@@ -16,6 +16,11 @@ import PurpleChevronLeft from "../../image/Icons/purple_chevron_left_icon.svg";
 import { parseDate } from "@internationalized/date";
 import { type DateValue } from "react-aria";
 import dayjs from "dayjs";
+import dynamic from "next/dynamic";
+
+const ItemsList = dynamic(() => import("../../components/ItemsList"), {
+  ssr: false,
+});
 
 type PropType = {
   toggleDrawer: () => void;
@@ -61,7 +66,7 @@ const Form = ({
   draftEventHandler,
   discardEventHandler,
 }: PropType) => {
-  const { handleSubmit, control, watch } = useForm<InvoiceFormValue>({
+  const methods = useForm<InvoiceFormValue>({
     defaultValues: {
       streetAddress: "",
       city: "",
@@ -77,6 +82,7 @@ const Form = ({
       itemArray: [],
     },
   });
+  const { handleSubmit, control, watch } = methods;
   // tract state for Select and DatePicker
 
   const [paymentTerms, setPaymentTerms] = useState("");
@@ -112,203 +118,205 @@ const Form = ({
   };
 
   return (
-    <FormContainer>
-      {isMobile && (
-        <div
-          onClick={() => toggleDrawer()}
-          tw="flex gap-6 mb-[31px] items-center"
-        >
-          <Image
-            src={PurpleChevronLeft as string}
-            alt="purple chevron left"
-          ></Image>
-          <HeadingS>Go back</HeadingS>
-        </div>
-      )}
-      <form onSubmit={void handleSubmit(onSubmit)}>
-        <HeadingM tw="mb-[46px]">{newInvoice && "New Invoice"}</HeadingM>
+    <>
+      <FormContainer>
+        {isMobile && (
+          <div
+            onClick={() => toggleDrawer()}
+            tw="flex gap-6 mb-[31px] items-center"
+          >
+            <Image
+              src={PurpleChevronLeft as string}
+              alt="purple chevron left"
+            ></Image>
+            <HeadingS>Go back</HeadingS>
+          </div>
+        )}
+        <form onSubmit={void handleSubmit(onSubmit)}>
+          <HeadingM tw="mb-[46px]">{newInvoice && "New Invoice"}</HeadingM>
 
-        <HeadingS tw="text-01 mb-6 dark:text-01">Bill From</HeadingS>
+          <HeadingS tw="text-01 mb-6 dark:text-01">Bill From</HeadingS>
 
-        <Controller
-          name="streetAddress"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextField
-              tw="w-full mb-[25px]"
-              label="Street Address"
-              {...field}
-              ref={null}
-            />
-          )}
-        />
-
-        <div tw="flex gap-6">
           <Controller
-            name="city"
+            name="streetAddress"
             control={control}
+            rules={{ required: true }}
             render={({ field }) => (
               <TextField
                 tw="w-full mb-[25px]"
-                label="City"
+                label="Street Address"
                 {...field}
                 ref={null}
               />
             )}
           />
-          <Controller
-            name="postCode"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                tw="w-full mb-[25px]"
-                label="Post Code"
-                {...field}
-                ref={null}
-              />
-            )}
-          />
-          <Controller
-            name="country"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                tw="w-full mb-[25px]"
-                label="Country"
-                {...field}
-                ref={null}
-              />
-            )}
-          />
-        </div>
 
-        <HeadingS tw="text-01 mb-6 dark:text-01">Bill To</HeadingS>
-
-        <Controller
-          name="clientName"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              tw="mb-[25px]"
-              label="Client's Name"
-              {...field}
-              ref={null}
+          <div tw="flex gap-6">
+            <Controller
+              name="city"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  tw="w-full mb-[25px]"
+                  label="City"
+                  {...field}
+                  ref={null}
+                />
+              )}
             />
-          )}
-        />
-        <Controller
-          name="clientEmail"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              tw="mb-[25px]"
-              label="Client's Email"
-              {...field}
-              ref={null}
+            <Controller
+              name="postCode"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  tw="w-full mb-[25px]"
+                  label="Post Code"
+                  {...field}
+                  ref={null}
+                />
+              )}
             />
-          )}
-        />
-        <Controller
-          name="clientStreetAddress"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              tw="mb-[25px]"
-              label="Street Address"
-              {...field}
-              ref={null}
-            />
-          )}
-        />
-
-        <div tw="flex gap-6 mb-[25px]">
-          <Controller
-            name="clientCity"
-            control={control}
-            render={({ field }) => (
-              <TextField label="City" {...field} ref={null} />
-            )}
-          />
-          <Controller
-            name="clientPostCode"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                label="Post Code"
-                {...field}
-                onChange={(event) => field.onChange(+event.target.value)}
-                ref={null}
-              />
-            )}
-          />
-          <Controller
-            name="clientCountry"
-            control={control}
-            render={({ field }) => (
-              <TextField label="Country" {...field} ref={null} />
-            )}
-          />
-        </div>
-        <div tw="flex gap-6 mb-[25px] desktop:(flex-nowrap) tablet:(flex-nowrap) flex-wrap">
-          <DatePicker
-            label="Invoice Date"
-            value={invoiceDate}
-            onChange={(value) => setInvoiceDate(value)}
-          />
-          <Select
-            label="Paynment Terms"
-            options={[
-              { key: "Net 1 day", value: 1 },
-              { key: "Net 10 days", value: 10 },
-              { key: "Net 30 days", value: 30 },
-            ]}
-            selected={paymentTerms}
-            setSelected={setPaymentTerms}
-          />
-        </div>
-
-        <div tw="mb-[35px]">
-          <Controller
-            name="clientProjectDescription"
-            control={control}
-            render={({ field }) => (
-              <TextField label="Project Description" {...field} ref={null} />
-            )}
-          />
-        </div>
-        <ItemsList
-          fields={fields}
-          append={append}
-          remove={remove}
-          control={control}
-          watch={watch}
-        />
-        <div tw="mt-[39px] mb-8 flex justify-between">
-          <Button
-            variant="secondary"
-            label="Discard"
-            onClick={() => discardEventHandler?.()}
-          />
-
-          <div tw="flex gap-2">
-            <Button
-              variant="tertiary"
-              label="Save as draft"
-              onClick={() => draftEventHandler?.()}
-            />
-
-            <Button
-              type="submit"
-              variant="primary"
-              label="Save & Send"
-              onClick={() => saveEventHandler?.()}
-              isLoading={createInvoice.isLoading}
+            <Controller
+              name="country"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  tw="w-full mb-[25px]"
+                  label="Country"
+                  {...field}
+                  ref={null}
+                />
+              )}
             />
           </div>
-        </div>
-      </form>
-    </FormContainer>
+
+          <HeadingS tw="text-01 mb-6 dark:text-01">Bill To</HeadingS>
+
+          <Controller
+            name="clientName"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                tw="mb-[25px]"
+                label="Client's Name"
+                {...field}
+                ref={null}
+              />
+            )}
+          />
+          <Controller
+            name="clientEmail"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                tw="mb-[25px]"
+                label="Client's Email"
+                {...field}
+                ref={null}
+              />
+            )}
+          />
+          <Controller
+            name="clientStreetAddress"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                tw="mb-[25px]"
+                label="Street Address"
+                {...field}
+                ref={null}
+              />
+            )}
+          />
+
+          <div tw="flex gap-6 mb-[25px]">
+            <Controller
+              name="clientCity"
+              control={control}
+              render={({ field }) => (
+                <TextField label="City" {...field} ref={null} />
+              )}
+            />
+            <Controller
+              name="clientPostCode"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  label="Post Code"
+                  {...field}
+                  onChange={(event) => field.onChange(+event.target.value)}
+                  ref={null}
+                />
+              )}
+            />
+            <Controller
+              name="clientCountry"
+              control={control}
+              render={({ field }) => (
+                <TextField label="Country" {...field} ref={null} />
+              )}
+            />
+          </div>
+          <div tw="flex gap-6 mb-[25px] desktop:(flex-nowrap) tablet:(flex-nowrap) flex-wrap">
+            <DatePicker
+              label="Invoice Date"
+              value={invoiceDate}
+              onChange={(value) => setInvoiceDate(value)}
+            />
+            <Select
+              label="Paynment Terms"
+              options={[
+                { key: "Net 1 day", value: 1 },
+                { key: "Net 10 days", value: 10 },
+                { key: "Net 30 days", value: 30 },
+              ]}
+              selected={paymentTerms}
+              setSelected={setPaymentTerms}
+            />
+          </div>
+
+          <div tw="mb-[35px]">
+            <Controller
+              name="clientProjectDescription"
+              control={control}
+              render={({ field }) => (
+                <TextField label="Project Description" {...field} ref={null} />
+              )}
+            />
+          </div>
+          <ItemsList
+            fields={fields}
+            append={append}
+            remove={remove}
+            control={control}
+            watch={watch}
+          />
+          <div tw="mt-[39px] mb-8 flex justify-between">
+            <Button
+              variant="secondary"
+              label="Discard"
+              onClick={() => discardEventHandler?.()}
+            />
+
+            <div tw="flex gap-2">
+              <Button
+                variant="tertiary"
+                label="Save as draft"
+                onClick={() => draftEventHandler?.()}
+              />
+
+              <Button
+                type="submit"
+                variant="primary"
+                label="Save & Send"
+                onClick={() => saveEventHandler?.()}
+                isLoading={createInvoice.isLoading}
+              />
+            </div>
+          </div>
+        </form>
+      </FormContainer>
+    </>
   );
 };
 
