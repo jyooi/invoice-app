@@ -71,7 +71,7 @@ export const invoiceRouter = createTRPCRouter({
   getAllInvoice: protectedProcedure
     .input(
       z.object({
-        status: z.enum(["DRAFT", "PENDING", "PAID"]),
+        status: z.array(z.enum(["DRAFT", "PENDING", "PAID"])),
       })
     )
     .query(({ ctx, input }) => {
@@ -80,7 +80,9 @@ export const invoiceRouter = createTRPCRouter({
           user: {
             id: ctx.session.user.id,
           },
-          status: input.status,
+          status: {
+            in: input.status,
+          },
         },
         include: {
           items: true,

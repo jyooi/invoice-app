@@ -26,7 +26,11 @@ export default function Invoice() {
     useState<InvoiceStatusFilter>({ DRAFT: true, PENDING: true, PAID: true });
 
   // get all invoice api
-  const invoices = api.invoice.getAllInvoice.useQuery();
+  const invoices = api.invoice.getAllInvoice.useQuery({
+    status: Object.entries(invoiceStatusFilter)
+      .filter(([, value]) => Boolean(value))
+      .map(([status]) => status as "DRAFT" | "PENDING" | "PAID"),
+  });
 
   console.log(invoices);
 
