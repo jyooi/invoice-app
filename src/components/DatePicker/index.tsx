@@ -23,14 +23,8 @@ export const DatePicker = (
     shouldCloseOnSelect: false,
   });
   const ref = useRef(null);
-  const {
-    groupProps,
-
-    fieldProps,
-    buttonProps,
-    dialogProps,
-    calendarProps,
-  } = useDatePicker(props, state, ref);
+  const { groupProps, fieldProps, buttonProps, dialogProps, calendarProps } =
+    useDatePicker(props, state, ref);
 
   return (
     <div tw="relative inline-flex flex-col text-left w-full mt-1">
@@ -38,7 +32,7 @@ export const DatePicker = (
       <div
         {...groupProps}
         ref={ref}
-        tw="flex justify-between relative flex h-12 w-full items-center rounded border border-gray-300 bg-white dark:bg-03 transition-colors group-focus-within:border-violet-600 group-hover:border-gray-400 pl-5 
+        tw="flex justify-between relative flex h-12 w-full items-center rounded border bg-white dark:(bg-03 border-04) transition-colors group-focus-within:border-violet-600 group-hover:border-gray-400 pl-5 
           font-bold border-05 hover:border-01 group-focus-within:group-hover:border-violet-600"
       >
         <div className="group" tw="">

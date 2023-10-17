@@ -59,7 +59,7 @@ export default function Invoice() {
         size={width > 696 ? 696 : width}
         styles={{ marginTop: isTablet ? 80 : 0 }}
       >
-        <Form toggleDrawer={toggleDrawer} />
+        <Form toggleDrawer={toggleDrawer} newInvoice />
       </Drawer>
     </div>
   );

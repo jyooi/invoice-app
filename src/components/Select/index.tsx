@@ -51,7 +51,7 @@ const SelectedLabel = styled(HeadingS)(() => [
 
 type PropType = {
   setSelected: (value: string) => void;
-  selected: string | null | undefined;
+  selected: string | undefined;
   options?: Option[];
   label?: string;
 };

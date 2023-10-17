@@ -4,23 +4,24 @@ import { useState } from "react";
 import Image from "next/image";
 import tw, { styled } from "twin.macro";
 import { DatePicker } from "~/components/DatePicker";
-import { Select, type Option } from "~/components/Select";
+import { Select } from "~/components/Select";
 import { TextField } from "~/components/TextField";
 import { HeadingS, HeadingM } from "~/components/Typography";
-import {
-  useForm,
-  Controller,
-  useFieldArray,
-  type SubmitHandler,
-} from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import ItemsList from "./ItemsList";
 import { Button } from "~/components/Button";
 import { useResponsiveMatch } from "~/utils/lib";
 import { api } from "~/utils/api";
 import PurpleChevronLeft from "../../image/Icons/purple_chevron_left_icon.svg";
-
+import { parseDate } from "@internationalized/date";
+import { type DateValue } from "react-aria";
+import dayjs from "dayjs";
 type PropType = {
   toggleDrawer: () => void;
+  newInvoice: boolean;
+  saveEventHandler?: () => void;
+  draftEventHandler?: () => void;
+  discardEventHandler?: () => void;
 };
 
 type Item = {
@@ -52,7 +53,13 @@ const FormContainer = styled.div(() => [
   tw`px-[59px] py-[56px] h-full overflow-auto`,
 ]);
 
-const Form = ({ toggleDrawer }: PropType) => {
+const Form = ({
+  toggleDrawer,
+  newInvoice,
+  saveEventHandler,
+  draftEventHandler,
+  discardEventHandler,
+}: PropType) => {
   const { handleSubmit, control, watch } = useForm<InvoiceFormValue>({
     defaultValues: {
       streetAddress: "",
@@ -66,16 +73,15 @@ const Form = ({ toggleDrawer }: PropType) => {
       clientPostCode: "",
       clientCountry: "",
       clientProjectDescription: "",
-      invoiceDate: "2020-01-01T00:00:00Z",
       itemArray: [],
     },
   });
   // tract state for Select and DatePicker
 
   const [paymentTerms, setPaymentTerms] = useState("");
-  const [invoiceDate, setInvoiceDate] = useState(new Date());
-
-  // tract state for Select and DatePicker
+  const [invoiceDate, setInvoiceDate] = useState<DateValue>(
+    parseDate(dayjs().format("YYYY-MM-DD"))
+  );
 
   const createInvoice = api.invoice.createInvoice.useMutation();
 
@@ -87,11 +93,21 @@ const Form = ({ toggleDrawer }: PropType) => {
   const { isMobile } = useResponsiveMatch();
 
   const onSubmit = async (data: InvoiceFormValue) => {
-    createInvoice.mutate({
-      ...data,
-      paymentTerms: Number(paymentTerms),
-      status: "PENDING",
-    });
+    // update invoiceDate
+    if (!newInvoice) {
+    }
+
+    // create invoice
+    if (newInvoice) {
+      createInvoice.mutate({
+        ...data,
+        paymentTerms: Number(paymentTerms),
+        invoiceDate: parseDate(dayjs().format("YYYY-MM-DD")).toString(),
+        status: "PENDING",
+      });
+    }
+
+    toggleDrawer();
   };
 
   return (
@@ -109,13 +125,14 @@ const Form = ({ toggleDrawer }: PropType) => {
         </div>
       )}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <HeadingM tw="mb-[46px]">Edit #XM9141</HeadingM>
+        <HeadingM tw="mb-[46px]">{newInvoice && "New Invoice"}</HeadingM>
 
         <HeadingS tw="text-01 mb-6 dark:text-01">Bill From</HeadingS>
 
         <Controller
           name="streetAddress"
           control={control}
+          rules={{ required: true }}
           render={({ field }) => (
             <TextField
               tw="w-full mb-[25px]"
@@ -232,8 +249,12 @@ const Form = ({ toggleDrawer }: PropType) => {
             )}
           />
         </div>
-        <div tw="flex gap-6 mb-[25px]">
-          <DatePicker label="Invoice Date" />
+        <div tw="flex gap-6 mb-[25px] desktop:(flex-nowrap) tablet:(flex-nowrap) flex-wrap">
+          <DatePicker
+            label="Invoice Date"
+            value={invoiceDate}
+            onChange={(value) => setInvoiceDate(value)}
+          />
           <Select
             label="Paynment Terms"
             options={[
@@ -263,20 +284,24 @@ const Form = ({ toggleDrawer }: PropType) => {
           watch={watch}
         />
         <div tw="mt-[39px] mb-8 flex justify-between">
-          <Button variant="secondary" label="Discard" onClick={() => null} />
+          <Button
+            variant="secondary"
+            label="Discard"
+            onClick={() => discardEventHandler?.()}
+          />
 
           <div tw="flex gap-2">
             <Button
               variant="tertiary"
               label="Save as draft"
-              onClick={() => null}
+              onClick={() => draftEventHandler?.()}
             />
 
             <Button
               type="submit"
               variant="primary"
               label="Save & Send"
-              onClick={() => null}
+              onClick={() => saveEventHandler?.()}
               isLoading={createInvoice.isLoading}
             />
           </div>

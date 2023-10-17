@@ -16,8 +16,10 @@ type ButtonProps = {
   isLoading?: boolean;
 };
 
-const Label = styled.span(() => [
+const Label = styled.span(({ isLoading }: { isLoading?: boolean }) => [
   tw`text-lg font-bold`,
+
+  isLoading && tw`hidden`,
   css`
     letter-spacing: -0.25px;
   `,
@@ -69,18 +71,18 @@ export const Button = ({
       fullWidth={fullWidth}
       type={type}
     >
-      {isLoading ? (
-        <Spinner size={20} />
-      ) : (
-        <>
-          {iconBefore ? (
-            <>{iconBefore}</>
-          ) : addIcon ? (
-            <Image src={AddIconSvg as string} alt="add-icon" />
-          ) : null}
-          <Label tw="p-4">{label}</Label>
-        </>
+      {isLoading && (
+        <Spinner
+          size={20}
+          color={variant === "primary" ? "white" : "#7c5dfa"}
+        />
       )}
+      {iconBefore ? (
+        <>{iconBefore}</>
+      ) : addIcon ? (
+        <Image src={AddIconSvg as string} alt="add-icon" />
+      ) : null}
+      <Label tw="p-4">{label}</Label>
     </ButtonGroup>
   );
 };
