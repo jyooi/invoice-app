@@ -68,18 +68,25 @@ export const invoiceRouter = createTRPCRouter({
       });
     }),
 
-  getAllInvoice: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.invoice.findMany({
-      where: {
-        user: {
-          id: ctx.session.user.id,
+  getAllInvoice: protectedProcedure
+    .input(
+      z.object({
+        status: z.enum(["DRAFT", "PENDING", "PAID"]),
+      })
+    )
+    .query(({ ctx, input }) => {
+      return ctx.prisma.invoice.findMany({
+        where: {
+          user: {
+            id: ctx.session.user.id,
+          },
+          status: input.status,
         },
-      },
-      include: {
-        items: true,
-      },
-    });
-  }),
+        include: {
+          items: true,
+        },
+      });
+    }),
 
   getOneInvoice: protectedProcedure
     .input(z.object({ id: z.string() }))
