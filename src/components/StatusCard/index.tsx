@@ -3,8 +3,10 @@ import React from "react";
 import tw, { styled, css } from "twin.macro";
 import { HeadingS } from "~/components/Typography";
 
+export type InoviceStatus = "PAID" | "PENDING" | "DRAFT";
+
 type PropType = {
-  status: "PAID" | "PENDING" | "DRAFT";
+  status: InoviceStatus;
 };
 
 const Container = styled.div(({ status }: { status: PropType["status"] }) => {

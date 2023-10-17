@@ -16,6 +16,7 @@ import PurpleChevronLeft from "../../image/Icons/purple_chevron_left_icon.svg";
 import { parseDate } from "@internationalized/date";
 import { type DateValue } from "react-aria";
 import dayjs from "dayjs";
+
 type PropType = {
   toggleDrawer: () => void;
   newInvoice: boolean;

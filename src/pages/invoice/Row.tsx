@@ -1,9 +1,9 @@
 import tw, { styled, css } from "twin.macro";
-import StatusCard from "../../components/StatusCard";
+import StatusCard, { type InoviceStatus } from "../../components/StatusCard";
 import { Body, HeadingS } from "~/components/Typography";
 import ChevronRightSvg from "../../image/Icons/purple_chevron_right_icon.svg";
 import Image from "next/image";
-
+import dayjs from "dayjs";
 const Container = styled.div(() => [
   tw`min-h-[72px] w-full rounded-md  items-center mb-[15px]`,
   tw`bg-white border border-transparent hover:border hover:border-01 cursor-pointer dark:bg-03`,
@@ -15,28 +15,42 @@ const Container = styled.div(() => [
   `,
 ]);
 
-const Row = () => {
+type PropType = {
+  invoiceId: string;
+  invoiceDate: Date;
+  clientName: string;
+  totalAmount: number;
+  status: string;
+};
+
+const Row = ({
+  invoiceId,
+  invoiceDate,
+  clientName,
+  totalAmount,
+  status,
+}: PropType) => {
   return (
     <Container>
       <div tw="order-first">
         <HeadingS tw="text-07">
-          <span>#</span>
-          {"RT2080"}
+          <span># {invoiceId.slice(0, 6).toUpperCase()}...</span>
         </HeadingS>
       </div>
       <div tw="order-3">
         <Body tw="text-07 ">
-          <span tw="text-06">Due</span> 31 Oct 2021
+          <span tw="text-06">Due</span>{" "}
+          {dayjs(invoiceDate).format("DD MMM YYYY")}
         </Body>
       </div>
       <div tw="order-1 justify-self-end tablet:justify-self-center desktop:justify-self-center">
-        <Body tw="text-[#858BB2]">Mellisa Clarke</Body>
+        <Body tw="text-[#858BB2]">{clientName}</Body>
       </div>
       <div tw="order-5 tablet:justify-self-center desktop:justify-self-center">
-        <HeadingS>$ 1,000</HeadingS>
+        <HeadingS>$ {totalAmount}</HeadingS>
       </div>
       <div tw="order-6 justify-self-end tablet:justify-self-start desktop:justify-self-start ">
-        <StatusCard tw="" status="PAID" />
+        <StatusCard status={status as InoviceStatus} />
       </div>
       <div tw="order-4 tablet:order-last desktop:order-last">
         <Image

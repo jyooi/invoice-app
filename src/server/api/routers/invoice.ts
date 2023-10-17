@@ -76,6 +76,13 @@ export const invoiceRouter = createTRPCRouter({
     )
     .query(({ ctx, input }) => {
       return ctx.prisma.invoice.findMany({
+        select: {
+          id: true,
+          status: true,
+          date: true,
+          clientName: true,
+          totalAmount: true,
+        },
         where: {
           user: {
             id: ctx.session.user.id,
@@ -83,9 +90,6 @@ export const invoiceRouter = createTRPCRouter({
           status: {
             in: input.status,
           },
-        },
-        include: {
-          items: true,
         },
       });
     }),
