@@ -12,12 +12,14 @@ type PropType = {
   setInvoiceStatusFilter: React.Dispatch<
     React.SetStateAction<InvoiceStatusFilter>
   >;
+  invoiceCount: number;
 };
 
 const Header = ({
   toggleDrawer,
   invoiceStatusFilter,
   setInvoiceStatusFilter,
+  invoiceCount,
 }: PropType) => {
   const { isTablet, isDesktop } = useResponsiveMatch();
 
@@ -25,11 +27,17 @@ const Header = ({
     <div tw="flex justify-between h-[55px]">
       <div tw="flex flex-col">
         <HeadingL>Invoice</HeadingL>
-        {isTablet || isDesktop ? (
-          <Body>There are 7 total invoice</Body>
-        ) : (
-          <Body>7 invoice</Body>
-        )}
+        <div tw="mt-[6px]">
+          {invoiceCount > 0 ? (
+            isTablet || isDesktop ? (
+              <Body webForm>There are {invoiceCount} total invoice</Body>
+            ) : (
+              <Body webForm>{invoiceCount} invoice</Body>
+            )
+          ) : (
+            <Body webForm>{"No invoice"}</Body>
+          )}
+        </div>
       </div>
 
       <div tw="flex items-center gap-[18px] tablet:gap-[40px] desktop:gap-[40px]">

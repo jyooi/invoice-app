@@ -48,6 +48,7 @@ export default function Invoice() {
         toggleDrawer={toggleDrawer}
         invoiceStatusFilter={invoiceStatusFilter}
         setInvoiceStatusFilter={setInvoiceStatusFilter}
+        invoiceCount={invoices?.data?.length ?? 0}
       />
 
       {invoices.isLoading ? (
