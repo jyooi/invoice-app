@@ -8,27 +8,30 @@ import { HeadingS } from "~/components/Typography";
 import ActionStatusBar from "./ActionStatusBar";
 import InvoiceDetails from "./InvoiceDetails";
 import MobileStickyActionBar from "./MobileStickyActionBar";
-const Container = styled.div(() => [tw`desktop:(h-screen) tablet:(h-screen)`]);
+import { useRouter } from "next/router";
 
-export default function Invoice() {
-  // const router = useRouter();
+function Invoice() {
+  const router = useRouter();
+  const { id } = router.query;
 
   return (
-    <>
-      <Container>
-        <Link href="/invoice" tw="flex gap-6 mb-[31px] ">
-          <Image
-            src={PurpleChevronLeft as string}
-            alt="purple chevron left"
-          ></Image>
-          <HeadingS>Go back</HeadingS>
-        </Link>
-        <div tw="mb-6">
-          <ActionStatusBar />
-        </div>
-        <InvoiceDetails />
-        <MobileStickyActionBar />
-      </Container>
-    </>
+    <Container>
+      <Link tw="flex gap-6 mb-[31px]" href="/invoice">
+        <Image
+          src={PurpleChevronLeft as string}
+          alt="purple chevron left"
+        ></Image>
+        <HeadingS>Go back</HeadingS>
+      </Link>
+      <div tw="mb-6">
+        <ActionStatusBar />
+      </div>
+      <InvoiceDetails id={id} />
+      <MobileStickyActionBar />
+    </Container>
   );
 }
+
+const Container = styled.div(() => [tw`desktop:(h-screen) tablet:(h-screen)`]);
+
+export default Invoice;

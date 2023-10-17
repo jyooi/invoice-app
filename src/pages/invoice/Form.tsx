@@ -125,7 +125,7 @@ const Form = ({
           <HeadingS>Go back</HeadingS>
         </div>
       )}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={void handleSubmit(onSubmit)}>
         <HeadingM tw="mb-[46px]">{newInvoice && "New Invoice"}</HeadingM>
 
         <HeadingS tw="text-01 mb-6 dark:text-01">Bill From</HeadingS>

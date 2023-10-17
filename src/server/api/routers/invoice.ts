@@ -94,13 +94,51 @@ export const invoiceRouter = createTRPCRouter({
       });
     }),
 
-  getOneInvoice: protectedProcedure
+  getOneInvoiceById: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.prisma.invoice.findUnique({
-        where: { id: input.id, user: { id: ctx.session.user.id } },
-        include: {
+        select: {
+          status: true,
+          streetAddress: true,
+          city: true,
+          postCode: true,
+          country: true,
+          clientProjectDescription: true,
+          clientName: true,
+          clientEmail: true,
+          clientCountry: true,
+          clientCity: true,
+          clientStreetAddress: true,
+          clientPostCode: true,
+          date: true,
+          paymentTerms: true,
+          totalAmount: true,
           items: true,
+        },
+        where: { id: input.id, user: { id: ctx.session.user.id } },
+      });
+    }),
+
+  removeInvoice: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(({ ctx, input }) => {
+      const result = ctx.prisma.invoice.delete({
+        where: { id: input.id, user: { id: ctx.session.user.id } },
+      });
+
+      return result;
+    }),
+
+  updateInvoiceStatus: protectedProcedure
+    .input(
+      z.object({ status: z.enum(["DRAFT", "PENDING", "PAID"]), id: z.string() })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.invoice.update({
+        where: { id: input.id, user: { id: ctx.session.user.id } },
+        data: {
+          status: input.status,
         },
       });
     }),

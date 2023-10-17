@@ -21,6 +21,7 @@ type PropType = {
   clientName: string;
   totalAmount: number;
   status: string;
+  onRowClick?: () => void;
 };
 
 const Row = ({
@@ -29,9 +30,10 @@ const Row = ({
   clientName,
   totalAmount,
   status,
+  onRowClick,
 }: PropType) => {
   return (
-    <Container>
+    <Container onClick={() => onRowClick?.()}>
       <div tw="order-first">
         <HeadingS tw="text-07">
           <span># {invoiceId.slice(0, 6).toUpperCase()}...</span>

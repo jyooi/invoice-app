@@ -1,6 +1,8 @@
 import { Card } from "~/components/Card";
 import { HeadingS, Body } from "~/components/Typography";
 import tw, { styled } from "twin.macro";
+import { api } from "~/utils/api";
+import dayjs from "dayjs";
 
 const InvoiceTitleSection = styled.div(() => [
   tw`desktop:(flex flex-row justify-between mb-[21px])`,
@@ -40,43 +42,64 @@ const MobileItemsCountContainer = styled.div(() => [
   tw`desktop:(hidden) tablet:(hidden) flex flex-nowrap gap-1 items-center mt-2`,
 ]);
 
-const InvoiceDetails = () => {
+type PropType = {
+  id: string | undefined | string[];
+};
+
+const InvoiceDetails = ({ id }: PropType) => {
+  const invoice = api.invoice.getOneInvoiceById.useQuery(
+    { id: id as string },
+    { enabled: Boolean(id) }
+  );
+
   return (
     <Card>
       <InvoiceTitleSection>
         <HeadingS>
-          <span tw="text-07">#</span> XM9141
+          <span tw="text-07">#</span> {id}
         </HeadingS>
         <Body webForm>
-          19 Union Terrace <br />
-          London E1 3EZ <br />
-          United Kingdom
+          {invoice.data?.streetAddress} <br />
+          {invoice.data?.city} {invoice.data?.postCode}
+          <br />
+          {invoice.data?.country}
         </Body>
       </InvoiceTitleSection>
       <InvoiceShipmentSection>
         <InvoiceDateRow>
           <>
             <Body tw="text-07">Invoice Date</Body>
-            <HeadingS>21 Aug 2021</HeadingS>
+            <HeadingS>
+              {dayjs(invoice.data?.date).format("DD MMM YYYY")}
+            </HeadingS>
           </>
           <>
             <Body tw="text-07">Payment Due</Body>
-            <HeadingS>21 Aug 2021</HeadingS>
+            <HeadingS>
+              {dayjs(invoice.data?.date)
+                .add(Number(invoice.data?.paymentTerms), "day")
+                .format("DD MMM YYYY")}
+            </HeadingS>
           </>
         </InvoiceDateRow>
 
         <div>
           <Body webForm> Bill To</Body>
-          <HeadingS tw="mb-[7px]">Alex Grim</HeadingS>
+          <HeadingS tw="mb-[7px]">{invoice.data?.clientName}</HeadingS>
           <Body webForm>
-            19 Union Terrace <br /> London E1 3EZ <br />
-            United Kingdom
+            {invoice.data?.clientStreetAddress} <br />{" "}
+            {invoice.data?.clientCity}
+            {"  "}
+            {invoice.data?.clientPostCode}
+            {invoice.data?.clientCity}
+            <br />
+            {invoice.data?.country}
           </Body>
         </div>
 
         <div>
           <Body webForm>Ship to</Body>
-          <HeadingS>alexgrim@mail.com</HeadingS>
+          <HeadingS>{invoice.data?.clientEmail}</HeadingS>
         </div>
       </InvoiceShipmentSection>
 
@@ -87,35 +110,37 @@ const InvoiceDetails = () => {
           <Body webForm>Price</Body>
           <Body webForm>Total</Body>
         </TableHeader>
-        <TableRow>
-          <HeadingS>
-            Brand Guidelines
-            <MobileItemsCountContainer>
-              <Body webForm tw="font-bold ">
-                1 {"x"}
-              </Body>
-              <Body webForm tw="font-bold">
-                $ 2,500.00
-              </Body>
-            </MobileItemsCountContainer>
-          </HeadingS>
+        {invoice.data?.items.map((item) => (
+          <TableRow key={item.id}>
+            <HeadingS>
+              {item.name}
+              <MobileItemsCountContainer>
+                <Body webForm tw="font-bold ">
+                  {item.quantity} {"x"}
+                </Body>
+                <Body webForm tw="font-bold">
+                  $ {item.price}
+                </Body>
+              </MobileItemsCountContainer>
+            </HeadingS>
 
-          <Body webForm tw="font-bold desktop:(block) tablet:(block) hidden">
-            1
-          </Body>
-          <Body webForm tw="font-bold desktop:(block) tablet:(block) hidden">
-            $ 2,500.00
-          </Body>
+            <Body webForm tw="font-bold desktop:(block) tablet:(block) hidden">
+              {item.quantity}
+            </Body>
+            <Body webForm tw="font-bold desktop:(block) tablet:(block) hidden">
+              $ {item.price}
+            </Body>
 
-          <HeadingS>$2,500.00</HeadingS>
-        </TableRow>
+            <HeadingS>$ {item.quantity * item.price}</HeadingS>
+          </TableRow>
+        ))}
       </ItemsTableSection>
       <ItemsTotalSection>
         <div tw="flex justify-between items-center">
           <Body webForm tw="text-white">
             Amount Due
           </Body>
-          <HeadingS tw="text-white">$ 2,500.00</HeadingS>
+          <HeadingS tw="text-white">$ {invoice.data?.totalAmount}</HeadingS>
         </div>
       </ItemsTotalSection>
     </Card>

@@ -12,6 +12,7 @@ import Form from "./Form";
 import { useWindowSize } from "react-use";
 import { api } from "~/utils/api";
 import { Spinner } from "~/components/Spinner";
+import { useRouter } from "next/router";
 
 const Header = dynamic(() => import("./Header"), { ssr: false });
 
@@ -22,8 +23,9 @@ export type InvoiceStatusFilter = {
 };
 
 export default function Invoice() {
+  const router = useRouter();
   const [invoiceStatusFilter, setInvoiceStatusFilter] =
-    useState<InvoiceStatusFilter>({ DRAFT: true, PENDING: true, PAID: true });
+    useState<InvoiceStatusFilter>({ DRAFT: true, PENDING: true, PAID: true }); // default all checkbox to true to display all types of invoice
 
   // get all invoice api with status filter
   const invoices = api.invoice.getAllInvoice.useQuery({
@@ -43,7 +45,7 @@ export default function Invoice() {
   };
 
   return (
-    <div tw="">
+    <>
       <Header
         toggleDrawer={toggleDrawer}
         invoiceStatusFilter={invoiceStatusFilter}
@@ -66,17 +68,18 @@ export default function Invoice() {
                 status={invoice.status}
                 clientName={invoice.clientName}
                 totalAmount={invoice.totalAmount}
+                onRowClick={() => void router.push(`/invoice/${invoice.id}`)}
               />
             ))
           ) : (
             <>
+              {/* empty invoice */}
               <Image
                 tw="mt-20"
                 src={EmptyInvoiceSvg as string}
                 alt="empty invoice svg"
               />
               <HeadingM tw="mt-[66px]"> There is nothing here</HeadingM>
-
               <Body tw="mt-[23px] text-center text-06">
                 Create an invoice by clicking the <br /> New Invoice Button and
                 get started
@@ -95,6 +98,6 @@ export default function Invoice() {
       >
         <Form toggleDrawer={toggleDrawer} newInvoice />
       </Drawer>
-    </div>
+    </>
   );
 }
