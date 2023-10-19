@@ -18,7 +18,17 @@ const StatusGrroup = styled.div(() => [
   tw`desktop:(flex items-center gap-5) tablet:(flex items-center gap-5) flex justify-between items-center`,
 ]);
 
-const ActionStatusBar = () => {
+type PropType = {
+  onEditInvoice?: () => void;
+  onDeleteInvoice?: () => void;
+  onMarkPaidInvoice?: () => void;
+};
+
+const ActionStatusBar = ({
+  onEditInvoice,
+  onDeleteInvoice,
+  onMarkPaidInvoice,
+}: PropType) => {
   return (
     <Card>
       <Container>
@@ -28,9 +38,21 @@ const ActionStatusBar = () => {
         </StatusGrroup>
 
         <ActionButtonGroup>
-          <Button variant="secondary" label="Edit" onClick={() => null} />
-          <Button variant="alert" label="Delete" onClick={() => null} />
-          <Button variant="primary" label="Mark as Paid" onClick={() => null} />
+          <Button
+            variant="secondary"
+            label="Edit"
+            onClick={() => onEditInvoice?.()}
+          />
+          <Button
+            variant="alert"
+            label="Delete"
+            onClick={() => onDeleteInvoice?.()}
+          />
+          <Button
+            variant="primary"
+            label="Mark as Paid"
+            onClick={() => onMarkPaidInvoice?.()}
+          />
         </ActionButtonGroup>
       </Container>
     </Card>
