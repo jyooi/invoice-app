@@ -116,8 +116,8 @@ const Form = ({
         invoiceDate: new Date(invoiceDate.toString()),
         status: "PENDING",
       });
-      await utils.invoice.getAllInvoice.invalidate();
     }
+    await utils.invoice.getAllInvoice.invalidate();
     toggleDrawer();
   };
 
