@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 "use client";
 
 import { useState } from "react";
@@ -66,6 +67,8 @@ const Form = ({
   draftEventHandler,
   discardEventHandler,
 }: PropType) => {
+  const utils = api.useContext();
+
   const methods = useForm<InvoiceFormValue>({
     defaultValues: {
       streetAddress: "",
@@ -82,6 +85,7 @@ const Form = ({
       itemArray: [],
     },
   });
+
   const { handleSubmit, control, watch } = methods;
   // tract state for Select and DatePicker
 
@@ -99,7 +103,7 @@ const Form = ({
 
   const { isMobile } = useResponsiveMatch();
 
-  const onSubmit = (data: InvoiceFormValue) => {
+  const onSubmit = async (data: InvoiceFormValue) => {
     // update invoiceDate
     if (!newInvoice) {
     }
@@ -109,11 +113,12 @@ const Form = ({
       createInvoice.mutate({
         ...data,
         paymentTerms: Number(paymentTerms),
-        invoiceDate: parseDate(dayjs().format("YYYY-MM-DD")).toString(),
+        invoiceDate: new Date(invoiceDate.toString()),
         status: "PENDING",
       });
     }
 
+    await utils.invoice.getAllInvoice.invalidate();
     toggleDrawer();
   };
 
@@ -132,7 +137,7 @@ const Form = ({
             <HeadingS>Go back</HeadingS>
           </div>
         )}
-        <form onSubmit={void handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <HeadingM tw="mb-[46px]">{newInvoice && "New Invoice"}</HeadingM>
 
           <HeadingS tw="text-01 mb-6 dark:text-01">Bill From</HeadingS>
@@ -244,7 +249,7 @@ const Form = ({
                 <TextField
                   label="Post Code"
                   {...field}
-                  onChange={(event) => field.onChange(+event.target.value)}
+                  onChange={(event) => field.onChange(event.target.value)}
                   ref={null}
                 />
               )}

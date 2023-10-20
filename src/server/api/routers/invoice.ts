@@ -18,7 +18,7 @@ export const invoiceRouter = createTRPCRouter({
         clientCity: z.string(),
         clientStreetAddress: z.string(),
         clientPostCode: z.string(),
-        invoiceDate: z.string().datetime(),
+        invoiceDate: z.date(),
         paymentTerms: z.number(),
         itemArray: z.array(
           z.object({

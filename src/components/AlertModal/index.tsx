@@ -7,7 +7,7 @@ type PropType = {
   setIsOpen: (value: boolean) => void;
   alertTitle: string;
   alertMessage: string;
-  onConfirm: () => void;
+  onConfirm: () => Promise<void>;
 };
 
 export default function AlertModal({
@@ -75,7 +75,7 @@ export default function AlertModal({
                         variant="alert"
                         type="button"
                         onClick={() => {
-                          onConfirm?.();
+                          void onConfirm?.();
                           closeModal();
                         }}
                         label="Confirm"

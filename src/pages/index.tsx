@@ -2,7 +2,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { api } from "~/utils/api";
+
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 const Home: NextPage = () => {
@@ -14,9 +14,6 @@ const Home: NextPage = () => {
     sessionData && void router.push("/invoice", undefined, { shallow: true });
   }, [sessionData, router]);
 
- 
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
   return (
     <>
       <Head>
@@ -25,17 +22,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main tw="flex h-screen flex-col items-center justify-center  from-[#2e026d] to-[#15162c]">
-        <div>
-          <div tw="flex flex-col items-center gap-2">
-            <p tw="text-2xl ">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
-            <AuthShowcase />
-          </div>
-          <br />
-          <br />
-          <br />
-        </div>
+        <AuthShowcase />
       </main>
     </>
   );
@@ -46,16 +33,10 @@ export default Home;
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
 
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
-
   return (
     <div tw="flex flex-col items-center justify-center gap-4">
       <p tw="text-center text-2xl ">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
         tw="rounded-full bg-white/10 px-10 py-3 font-semibold  no-underline transition hover:bg-white/20"

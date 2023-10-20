@@ -13,17 +13,22 @@ import AlertModel from "~/components/AlertModal";
 import { api } from "~/utils/api";
 
 function Invoice() {
+  const utils = api.useContext();
   const router = useRouter();
   const { id } = router.query;
 
   const deleteInvoice = api.invoice.removeInvoice.useMutation();
   const updateInvoice = api.invoice.updateInvoiceStatus.useMutation();
 
-  const [dialog, setDialog] = useState({
+  const [dialog, setDialog] = useState<{
+    title: string;
+    message: string;
+    isOpen: boolean;
+    onConfirm?: () => Promise<void>;
+  }>({
     title: "",
     message: "",
     isOpen: false,
-    onConfirm: () => void 0,
   });
 
   function resetDialog() {
@@ -31,8 +36,12 @@ function Invoice() {
       title: "",
       message: "",
       isOpen: false,
-      onConfirm: () => void 0,
     });
+  }
+
+  async function handleInvoiceStateChange() {
+    await utils.invoice.getAllInvoice.invalidate();
+    void router.push("/invoice");
   }
 
   return (
@@ -51,9 +60,9 @@ function Invoice() {
               isOpen: true,
               title: "Confirm Deletion",
               message: "Are you sure you want to delete this invoice?",
-              onConfirm: () => {
-                deleteInvoice.mutate({ id: id as string });
-                void router.push("/invoice");
+              onConfirm: async () => {
+                await deleteInvoice.mutateAsync({ id: id as string });
+                await handleInvoiceStateChange();
               },
             })
           }
@@ -63,8 +72,9 @@ function Invoice() {
               isOpen: true,
               title: "Mark as Paid",
               message: "Are you sure you want to mark this invoice as paid?",
-              onConfirm: () => {
+              onConfirm: async () => {
                 updateInvoice.mutate({ id: id as string, status: "PAID" });
+                await utils.invoice.getAllInvoice.invalidate();
                 void router.push("/invoice");
               },
             })
@@ -78,9 +88,7 @@ function Invoice() {
         setIsOpen={() => resetDialog()}
         alertTitle={dialog.title}
         alertMessage={dialog.message}
-        onConfirm={() => {
-          dialog.onConfirm();
-        }}
+        onConfirm={async () => dialog.onConfirm?.()}
       />
     </Container>
   );
