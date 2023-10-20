@@ -110,15 +110,14 @@ const Form = ({
 
     // create invoice
     if (newInvoice) {
-      createInvoice.mutate({
+      await createInvoice.mutateAsync({
         ...data,
         paymentTerms: Number(paymentTerms),
         invoiceDate: new Date(invoiceDate.toString()),
         status: "PENDING",
       });
+      await utils.invoice.getAllInvoice.invalidate();
     }
-
-    await utils.invoice.getAllInvoice.invalidate();
     toggleDrawer();
   };
 

@@ -39,11 +39,6 @@ function Invoice() {
     });
   }
 
-  async function handleInvoiceStateChange() {
-    await utils.invoice.getAllInvoice.invalidate();
-    void router.push("/invoice");
-  }
-
   return (
     <Container>
       <Link tw="flex gap-6 mb-[31px]" href="/invoice">
@@ -62,7 +57,8 @@ function Invoice() {
               message: "Are you sure you want to delete this invoice?",
               onConfirm: async () => {
                 await deleteInvoice.mutateAsync({ id: id as string });
-                await handleInvoiceStateChange();
+                await utils.invoice.getAllInvoice.invalidate();
+                void router.push("/invoice");
               },
             })
           }
@@ -73,7 +69,10 @@ function Invoice() {
               title: "Mark as Paid",
               message: "Are you sure you want to mark this invoice as paid?",
               onConfirm: async () => {
-                updateInvoice.mutate({ id: id as string, status: "PAID" });
+                await updateInvoice.mutateAsync({
+                  id: id as string,
+                  status: "PAID",
+                });
                 await utils.invoice.getAllInvoice.invalidate();
                 void router.push("/invoice");
               },
