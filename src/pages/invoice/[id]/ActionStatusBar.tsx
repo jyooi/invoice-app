@@ -2,10 +2,10 @@
 
 import tw, { styled } from "twin.macro";
 import { Card } from "~/components/Card";
-import StatusCard from "~/components/StatusCard";
+import StatusCard, { type InoviceStatus } from "~/components/StatusCard";
 import { Body } from "~/components/Typography";
 import { Button } from "~/components/Button";
-
+import { api } from "~/utils/api";
 const Container = styled.div(() => [
   tw`desktop:(flex justify-between) tablet:(flex justify-between)`,
 ]);
@@ -22,19 +22,23 @@ type PropType = {
   onEditInvoice?: () => void;
   onDeleteInvoice?: () => void;
   onMarkPaidInvoice?: () => void;
+  id: string;
 };
 
 const ActionStatusBar = ({
   onEditInvoice,
   onDeleteInvoice,
   onMarkPaidInvoice,
+  id,
 }: PropType) => {
+  const invoice = api.invoice.getOneInvoiceById.useQuery({ id });
+
   return (
     <Card>
       <Container>
         <StatusGrroup>
           <Body tw="text-[#858BB2] font-medium">Status</Body>
-          <StatusCard status="PENDING" />
+          <StatusCard status={invoice.data?.status as InoviceStatus} />
         </StatusGrroup>
 
         <ActionButtonGroup>

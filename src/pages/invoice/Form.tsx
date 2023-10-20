@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import tw, { styled } from "twin.macro";
 import { DatePicker } from "~/components/DatePicker";
@@ -25,10 +25,11 @@ const ItemsList = dynamic(() => import("../../components/ItemsList"), {
 
 type PropType = {
   toggleDrawer: () => void;
-  newInvoice: boolean;
+  newInvoice?: boolean;
   saveEventHandler?: () => void;
   draftEventHandler?: () => void;
   discardEventHandler?: () => void;
+  invoiceId?: string;
 };
 
 type Item = {
@@ -66,8 +67,21 @@ const Form = ({
   saveEventHandler,
   draftEventHandler,
   discardEventHandler,
+  invoiceId,
 }: PropType) => {
   const utils = api.useContext();
+  console.log(invoiceId);
+
+  // if invoiceId is provided, fetch invoice data
+
+  const invoice = api.invoice.getOneInvoiceById.useQuery(
+    {
+      id: invoiceId as string,
+    },
+    { enabled: Boolean(invoiceId && !newInvoice) }
+  );
+
+  console.log(invoice);
 
   const methods = useForm<InvoiceFormValue>({
     defaultValues: {
@@ -86,7 +100,7 @@ const Form = ({
     },
   });
 
-  const { handleSubmit, control, watch } = methods;
+  const { handleSubmit, control, watch, reset } = methods;
   // tract state for Select and DatePicker
 
   const [paymentTerms, setPaymentTerms] = useState("");
@@ -121,6 +135,35 @@ const Form = ({
     toggleDrawer();
   };
 
+  useEffect(() => {
+    if (!newInvoice && invoiceId) {
+      const invoiceData = {
+        ...invoice?.data,
+        itemArray: invoice?.data?.items.map((item) => ({
+          itemName: item.name,
+          itemQuantity: item.quantity,
+          itemPrice: item.price,
+        })),
+      };
+      reset(
+        invoiceData || {
+          streetAddress: "",
+          city: "",
+          postCode: "",
+          country: "",
+          clientName: "",
+          clientEmail: "",
+          clientStreetAddress: "",
+          clientCity: "",
+          clientPostCode: "",
+          clientCountry: "",
+          clientProjectDescription: "",
+          itemArray: [],
+        }
+      );
+    }
+  }, [newInvoice, invoiceId, reset, invoice?.data]);
+
   return (
     <>
       <FormContainer>
@@ -137,7 +180,9 @@ const Form = ({
           </div>
         )}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <HeadingM tw="mb-[46px]">{newInvoice && "New Invoice"}</HeadingM>
+          <HeadingM tw="mb-[46px]">
+            {newInvoice ? "New Invoice" : invoiceId}
+          </HeadingM>
 
           <HeadingS tw="text-01 mb-6 dark:text-01">Bill From</HeadingS>
 

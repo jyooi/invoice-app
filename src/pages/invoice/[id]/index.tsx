@@ -11,11 +11,21 @@ import MobileStickyActionBar from "./MobileStickyActionBar";
 import { useRouter } from "next/router";
 import AlertModel from "~/components/AlertModal";
 import { api } from "~/utils/api";
+import { Drawer } from "~/components/Drawer";
+import { useWindowSize } from "react-use";
+import Form from "../Form";
+import { useResponsiveMatch } from "~/utils/lib";
 
 function Invoice() {
-  const utils = api.useContext();
   const router = useRouter();
   const { id } = router.query;
+
+  const [editFormDrawer, setEditFormDrawer] = useState(false);
+
+  const utils = api.useContext();
+
+  const { width } = useWindowSize();
+  const { isTablet } = useResponsiveMatch();
 
   const deleteInvoice = api.invoice.removeInvoice.useMutation();
   const updateInvoice = api.invoice.updateInvoiceStatus.useMutation();
@@ -39,6 +49,10 @@ function Invoice() {
     });
   }
 
+  function toggleDrawer() {
+    setEditFormDrawer((prevState) => !prevState);
+  }
+
   return (
     <Container>
       <Link tw="flex gap-6 mb-[31px]" href="/invoice">
@@ -50,6 +64,7 @@ function Invoice() {
       </Link>
       <div tw="mb-6">
         <ActionStatusBar
+          id={id as string}
           onDeleteInvoice={() =>
             setDialog({
               isOpen: true,
@@ -62,7 +77,9 @@ function Invoice() {
               },
             })
           }
-          onEditInvoice={() => null}
+          onEditInvoice={() => {
+            setEditFormDrawer(true);
+          }}
           onMarkPaidInvoice={() =>
             setDialog({
               isOpen: true,
@@ -89,6 +106,16 @@ function Invoice() {
         alertMessage={dialog.message}
         onConfirm={async () => dialog.onConfirm?.()}
       />
+
+      <Drawer
+        open={editFormDrawer}
+        onClose={toggleDrawer}
+        direction="left"
+        size={width > 696 ? 696 : width}
+        styles={{ marginTop: isTablet ? 80 : 0 }}
+      >
+        <Form toggleDrawer={toggleDrawer} invoiceId={id as string} />
+      </Drawer>
     </Container>
   );
 }
