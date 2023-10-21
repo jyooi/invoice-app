@@ -18,6 +18,7 @@ import { parseDate } from "@internationalized/date";
 import { type DateValue } from "react-aria";
 import dayjs from "dayjs";
 import dynamic from "next/dynamic";
+import { type InoviceStatus } from "~/components/StatusCard";
 
 const ItemsList = dynamic(() => import("../../components/ItemsList"), {
   ssr: false,
@@ -29,10 +30,12 @@ type PropType = {
   saveEventHandler?: () => void;
   draftEventHandler?: () => void;
   discardEventHandler?: () => void;
+  updateEventHandler?: () => void;
   invoiceId?: string;
 };
 
 type Item = {
+  itemId: string;
   itemName: string;
   itemQuantity: number;
   itemPrice: number;
@@ -67,21 +70,12 @@ const Form = ({
   saveEventHandler,
   draftEventHandler,
   discardEventHandler,
+  updateEventHandler,
   invoiceId,
 }: PropType) => {
   const utils = api.useContext();
-  console.log(invoiceId);
 
   // if invoiceId is provided, fetch invoice data
-
-  const invoice = api.invoice.getOneInvoiceById.useQuery(
-    {
-      id: invoiceId as string,
-    },
-    { enabled: Boolean(invoiceId && !newInvoice) }
-  );
-
-  console.log(invoice);
 
   const methods = useForm<InvoiceFormValue>({
     defaultValues: {
@@ -104,11 +98,25 @@ const Form = ({
   // tract state for Select and DatePicker
 
   const [paymentTerms, setPaymentTerms] = useState("");
+
   const [invoiceDate, setInvoiceDate] = useState<DateValue>(
     parseDate(dayjs().format("YYYY-MM-DD"))
   );
 
   const createInvoice = api.invoice.createInvoice.useMutation();
+
+  const updateInvoice = api.invoice.updateInvoice.useMutation();
+
+  const invoice = api.invoice.getOneInvoiceById.useQuery(
+    {
+      id: invoiceId as string,
+    },
+    { enabled: Boolean(invoiceId && !newInvoice) }
+  );
+
+  const deleteItem = api.item.deleteItem.useMutation();
+
+  const createOrUpdateItem = api.item.updateOrCreateItem.useMutation();
 
   const { fields, remove, append } = useFieldArray({
     control,
@@ -120,6 +128,41 @@ const Form = ({
   const onSubmit = async (data: InvoiceFormValue) => {
     // update invoiceDate
     if (!newInvoice) {
+      const filterDeletedItem = invoice.data?.items.filter(
+        (item) =>
+          !data.itemArray.find((itemArray) => itemArray.itemId === item.id)
+      );
+
+      // remove deleted item from invoice
+      if (filterDeletedItem && filterDeletedItem.length > 0) {
+        await Promise.all(
+          filterDeletedItem.map((item) =>
+            deleteItem.mutateAsync({ id: item.id })
+          )
+        );
+      }
+
+      // create or update item
+      await Promise.all(
+        data.itemArray.map((item) =>
+          createOrUpdateItem.mutateAsync({
+            itemId: item.itemId,
+            itemName: item.itemName,
+            itemQuantity: item.itemQuantity,
+            itemPrice: item.itemPrice,
+            invoiceId: invoiceId as string,
+          })
+        )
+      );
+
+      await updateInvoice.mutateAsync({
+        ...data,
+        paymentTerms: Number(paymentTerms),
+        invoiceDate: new Date(invoiceDate.toString()),
+        status: invoice.data?.status as InoviceStatus,
+        id: invoiceId as string,
+      });
+      await utils.invoice.getOneInvoiceById.invalidate();
     }
 
     // create invoice
@@ -130,8 +173,9 @@ const Form = ({
         invoiceDate: new Date(invoiceDate.toString()),
         status: "PENDING",
       });
+      await utils.invoice.getAllInvoice.invalidate();
     }
-    await utils.invoice.getAllInvoice.invalidate();
+
     toggleDrawer();
   };
 
@@ -140,6 +184,7 @@ const Form = ({
       const invoiceData = {
         ...invoice?.data,
         itemArray: invoice?.data?.items.map((item) => ({
+          itemId: item.id,
           itemName: item.name,
           itemQuantity: item.quantity,
           itemPrice: item.price,
@@ -340,29 +385,47 @@ const Form = ({
             control={control}
             watch={watch}
           />
-          <div tw="mt-[39px] mb-8 flex justify-between">
-            <Button
-              variant="secondary"
-              label="Discard"
-              onClick={() => discardEventHandler?.()}
-            />
+          {newInvoice ? (
+            <div tw="mt-[39px] mb-8 flex justify-between">
+              <Button
+                variant="secondary"
+                label="Discard"
+                onClick={() => discardEventHandler?.()}
+              />
 
-            <div tw="flex gap-2">
+              <div tw="flex gap-2">
+                <Button
+                  variant="tertiary"
+                  label="Save as draft"
+                  onClick={() => draftEventHandler?.()}
+                />
+
+                <Button
+                  type="submit"
+                  variant="primary"
+                  label="Save & Send"
+                  onClick={() => saveEventHandler?.()}
+                  isLoading={createInvoice.isLoading}
+                />
+              </div>
+            </div>
+          ) : (
+            <div tw="flex justify-end mt-[39px] mb-8 gap-2">
               <Button
                 variant="tertiary"
-                label="Save as draft"
-                onClick={() => draftEventHandler?.()}
+                label="Cancel"
+                onClick={() => toggleDrawer()}
               />
 
               <Button
                 type="submit"
                 variant="primary"
-                label="Save & Send"
-                onClick={() => saveEventHandler?.()}
+                label="Update"
+                onClick={() => updateEventHandler?.()}
                 isLoading={createInvoice.isLoading}
               />
             </div>
-          </div>
+          )}
         </form>
       </FormContainer>
     </>

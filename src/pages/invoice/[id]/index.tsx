@@ -91,7 +91,6 @@ function Invoice() {
                   status: "PAID",
                 });
                 await utils.invoice.getAllInvoice.invalidate();
-                void router.push("/invoice");
               },
             })
           }

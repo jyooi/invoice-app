@@ -142,4 +142,60 @@ export const invoiceRouter = createTRPCRouter({
         },
       });
     }),
+
+  updateInvoice: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        status: z.enum(["DRAFT", "PENDING", "PAID"]),
+        streetAddress: z.string(),
+        city: z.string(),
+        postCode: z.string(),
+        country: z.string(),
+        clientProjectDescription: z.string(),
+        clientName: z.string(),
+        clientEmail: z.string().email(),
+        clientCountry: z.string(),
+        clientCity: z.string(),
+        clientStreetAddress: z.string(),
+        clientPostCode: z.string(),
+        invoiceDate: z.date(),
+        paymentTerms: z.number(),
+        itemArray: z.array(
+          z.object({
+            itemId: z.optional(z.string()) || undefined,
+            itemName: z.string(),
+            itemQuantity: z.number(),
+            itemPrice: z.number(),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.invoice.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          status: input.status,
+          streetAddress: input.streetAddress,
+          city: input.city,
+          postCode: input.postCode,
+          country: input.country,
+          clientProjectDescription: input.clientProjectDescription,
+          clientName: input.clientName,
+          clientEmail: input.clientEmail,
+          clientCountry: input.clientCountry,
+          clientCity: input.clientCity,
+          clientStreetAddress: input.clientStreetAddress,
+          clientPostCode: input.clientPostCode,
+          date: input.invoiceDate,
+          paymentTerms: input.paymentTerms,
+          totalAmount: input.itemArray.reduce(
+            (acc, curr) => acc + curr.itemPrice * curr.itemQuantity,
+            0
+          ),
+        },
+      });
+    }),
 });
