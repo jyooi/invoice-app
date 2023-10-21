@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 "use client";
 import { Checkbox } from "~/components/Checkbox";
 import { HeadingL, Body } from "~/components/Typography";
@@ -94,8 +95,8 @@ const Header = ({
               variant="primary"
               label={"Sign out"}
               onClick={() => {
-                void signOut();
-                void router.push("/");
+                signOut();
+                router.push("/");
               }}
             />
           )}
