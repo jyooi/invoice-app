@@ -105,7 +105,7 @@ const ItemsList = ({ fields, remove, control, append }: PropType) => {
           label="+ Add New Item"
           fullWidth
           onClick={() =>
-            append({ itemName: "", itemQuantity: 0, itemPrice: 0 })
+            append({ itemId: "", itemName: "", itemQuantity: 0, itemPrice: 0 })
           }
         />
       </div>
