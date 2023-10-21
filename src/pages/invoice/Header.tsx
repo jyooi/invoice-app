@@ -8,7 +8,6 @@ import { useResponsiveMatch } from "~/utils/lib";
 import { type InvoiceStatusFilter } from "./index";
 
 import { signOut, useSession } from "next-auth/react";
-import { use } from "react";
 import { useRouter } from "next/router";
 type PropType = {
   toggleDrawer: () => void;
@@ -26,7 +25,7 @@ const Header = ({
   invoiceCount,
 }: PropType) => {
   const router = useRouter();
-  const { data: sessionData } = useSession();
+  const { data: sessionData, status } = useSession();
   const { isTablet, isDesktop } = useResponsiveMatch();
 
   return (
@@ -92,6 +91,7 @@ const Header = ({
           />
           {sessionData && (
             <Button
+              isLoading={status !== "authenticated"}
               variant="primary"
               label={"Sign out"}
               onClick={() => {
