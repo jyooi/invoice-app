@@ -5,6 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { Button } from "~/components/Button";
 const Home: NextPage = () => {
   const { data: sessionData } = useSession();
   const router = useRouter();
@@ -38,12 +39,11 @@ const AuthShowcase: React.FC = () => {
       <p tw="text-center text-2xl ">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
       </p>
-      <button
-        tw="rounded-full bg-white/10 px-10 py-3 font-semibold  no-underline transition hover:bg-white/20"
+      <Button
+        variant="primary"
+        label={sessionData ? "Sign out" : "Sign in"}
         onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
+      />
     </div>
   );
 };

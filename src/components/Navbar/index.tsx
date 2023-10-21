@@ -7,7 +7,7 @@ import BrandLogo from "../../image/Icons/brand_logo.svg";
 import AvatarSampleImageSvg from "../../image/avatar_sample_image.svg";
 import MoonIconsSvg from "../../image/Icons/moon_icon.svg";
 import { useTheme } from "next-themes";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, useSession, signOut } from "next-auth/react";
 import { Button } from "../Button";
 // Write me a nav bar that able to stick to the right of the page when in on desktop size
 
@@ -54,6 +54,14 @@ export const Navbar = () => {
           <Image src={MoonIconsSvg as string} alt="moon-icon" />
         </RightNavItem>
         <BorderLine />
+
+        {sessionData && (
+          <Button
+            variant="primary"
+            label={sessionData ? "Sign out" : "Sign in"}
+            onClick={sessionData ? () => void signOut() : () => void signIn()}
+          />
+        )}
 
         {sessionData && (
           <RoundAvatar
