@@ -45,6 +45,15 @@ export const Navbar = () => {
           alt={"brand_logo"}
           tw="[height:72px] w-full desktop:(w-20 h-20) tablet:(w-20 h-20)"
         />
+
+        {sessionData && (
+          <Button
+            variant="primary"
+            tw="text-sm"
+            label={sessionData ? "Sign out" : "Sign in"}
+            onClick={sessionData ? () => void signOut() : () => void signIn()}
+          />
+        )}
       </Link>
 
       <RightNavItemContainer>
@@ -54,14 +63,6 @@ export const Navbar = () => {
           <Image src={MoonIconsSvg as string} alt="moon-icon" />
         </RightNavItem>
         <BorderLine />
-
-        {sessionData && (
-          <Button
-            variant="primary"
-            label={sessionData ? "Sign out" : "Sign in"}
-            onClick={sessionData ? () => void signOut() : () => void signIn()}
-          />
-        )}
 
         {sessionData && (
           <RoundAvatar
