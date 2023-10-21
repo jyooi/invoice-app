@@ -91,7 +91,6 @@ const Header = ({
           />
           {sessionData && (
             <Button
-              isLoading={status !== "authenticated"}
               variant="primary"
               label={"Sign out"}
               onClick={() => {

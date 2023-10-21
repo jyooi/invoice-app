@@ -32,7 +32,7 @@ const Home: NextPage = () => {
 export default Home;
 
 const AuthShowcase: React.FC = () => {
-  const { data: sessionData ,status} = useSession();
+  const { data: sessionData, status } = useSession();
 
   return (
     <div tw="flex flex-col items-center justify-center gap-4">
@@ -41,7 +41,7 @@ const AuthShowcase: React.FC = () => {
       </p>
       <Button
         variant="primary"
-        isLoading={status !== "authenticated"}
+        isLoading={status === "loading" ? true : false}
         label={sessionData ? "Sign out" : "Sign in"}
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       />
