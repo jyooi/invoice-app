@@ -94,8 +94,8 @@ const Header = ({
             <Button
               variant="primary"
               label={"Sign out"}
-              onClick={() => {
-                signOut();
+              onClick={async () => {
+                await signOut();
                 router.push("/");
               }}
             />
