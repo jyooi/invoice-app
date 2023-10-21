@@ -8,6 +8,8 @@ import { useResponsiveMatch } from "~/utils/lib";
 import { type InvoiceStatusFilter } from "./index";
 
 import { signOut, useSession } from "next-auth/react";
+import { use } from "react";
+import { useRouter } from "next/router";
 type PropType = {
   toggleDrawer: () => void;
   invoiceStatusFilter: InvoiceStatusFilter;
@@ -23,6 +25,7 @@ const Header = ({
   setInvoiceStatusFilter,
   invoiceCount,
 }: PropType) => {
+  const router = useRouter();
   const { data: sessionData } = useSession();
   const { isTablet, isDesktop } = useResponsiveMatch();
 
@@ -91,7 +94,10 @@ const Header = ({
             <Button
               variant="primary"
               label={"Sign out"}
-              onClick={() => signOut()}
+              onClick={() => {
+                void signOut();
+                void router.push("/");
+              }}
             />
           )}
         </div>
