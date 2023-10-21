@@ -8,7 +8,8 @@ import AvatarSampleImageSvg from "../../image/avatar_sample_image.svg";
 import MoonIconsSvg from "../../image/Icons/moon_icon.svg";
 import { useTheme } from "next-themes";
 import { signIn, useSession, signOut } from "next-auth/react";
-import { Button } from "../Button";
+import { Popover } from "@headlessui/react";
+
 // Write me a nav bar that able to stick to the right of the page when in on desktop size
 
 // and able to be a hamburger menu when on mobile size
@@ -45,15 +46,6 @@ export const Navbar = () => {
           alt={"brand_logo"}
           tw="[height:72px] w-full desktop:(w-20 h-20) tablet:(w-20 h-20)"
         />
-
-        {sessionData && (
-          <Button
-            variant="primary"
-            tw="text-sm"
-            label={sessionData ? "Sign out" : "Sign in"}
-            onClick={sessionData ? () => void signOut() : () => void signIn()}
-          />
-        )}
       </Link>
 
       <RightNavItemContainer>
@@ -64,18 +56,30 @@ export const Navbar = () => {
         </RightNavItem>
         <BorderLine />
 
-        {sessionData && (
-          <RoundAvatar
-            width={32}
-            height={32}
-            src={
-              sessionData && sessionData?.user?.image
-                ? sessionData.user.image ?? ""
-                : (AvatarSampleImageSvg as string)
-            }
-            alt="avatar sample Image"
-          />
-        )}
+        <Popover tw="relative">
+          <Popover.Button>
+            {sessionData && (
+              <RoundAvatar
+                width={32}
+                height={32}
+                src={
+                  sessionData && sessionData?.user?.image
+                    ? sessionData.user.image ?? ""
+                    : (AvatarSampleImageSvg as string)
+                }
+                alt="avatar sample Image"
+              />
+            )}
+          </Popover.Button>
+
+          <Popover.Panel tw="absolute z-10">
+            <div tw="grid grid-cols-2">
+              <div onClick={() => (sessionData ? signIn() : signOut())}>
+                {sessionData ? "Sign In" : "Sign Out"}
+              </div>
+            </div>
+          </Popover.Panel>
+        </Popover>
       </RightNavItemContainer>
     </Container>
   );
