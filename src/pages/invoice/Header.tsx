@@ -6,6 +6,8 @@ import { PopOver } from "~/components/Popover";
 import { Button } from "~/components/Button";
 import { useResponsiveMatch } from "~/utils/lib";
 import { type InvoiceStatusFilter } from "./index";
+
+import { signOut, useSession } from "next-auth/react";
 type PropType = {
   toggleDrawer: () => void;
   invoiceStatusFilter: InvoiceStatusFilter;
@@ -21,6 +23,7 @@ const Header = ({
   setInvoiceStatusFilter,
   invoiceCount,
 }: PropType) => {
+  const { data: sessionData } = useSession();
   const { isTablet, isDesktop } = useResponsiveMatch();
 
   return (
@@ -77,12 +80,21 @@ const Header = ({
             </div>
           </div>
         </PopOver>
-        <Button
-          addIcon
-          variant="primary"
-          label={isTablet || isDesktop ? "New Invoice" : "New"}
-          onClick={() => toggleDrawer()}
-        />
+        <div tw="flex gap-2">
+          <Button
+            addIcon
+            variant="primary"
+            label={isTablet || isDesktop ? "New Invoice" : "New"}
+            onClick={() => toggleDrawer()}
+          />
+          {sessionData && (
+            <Button
+              variant="primary"
+              label={"Sign out"}
+              onClick={() => signOut()}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

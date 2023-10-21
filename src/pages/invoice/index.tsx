@@ -12,8 +12,8 @@ import { useWindowSize } from "react-use";
 import { api } from "~/utils/api";
 import { Spinner } from "~/components/Spinner";
 import { useRouter } from "next/router";
-import { Button } from "~/components/Button";
-import { signOut, useSession, signIn } from "next-auth/react";
+
+
 
 const Header = dynamic(() => import("./Header"), { ssr: false });
 const Form = dynamic(() => import("./Form"), { ssr: false });
@@ -26,7 +26,7 @@ export type InvoiceStatusFilter = {
 export default function Invoice() {
   const router = useRouter();
 
-  const { data: sessionData } = useSession();
+  
 
   const [invoiceStatusFilter, setInvoiceStatusFilter] =
     useState<InvoiceStatusFilter>({ DRAFT: true, PENDING: true, PAID: true }); // default all checkbox to true to display all types of invoice
@@ -92,12 +92,6 @@ export default function Invoice() {
           )}
         </div>
       )}
-
-      <Button
-        variant="primary"
-        label={sessionData ? "Sign out" : "Sign In"}
-        onClick={() => (sessionData ? signIn() : signOut())}
-      />
 
       <Drawer
         open={addInvoiceDrawerOpen}
