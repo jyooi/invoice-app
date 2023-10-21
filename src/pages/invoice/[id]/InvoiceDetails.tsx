@@ -91,9 +91,8 @@ const InvoiceDetails = ({ id }: PropType) => {
             {invoice.data?.clientCity}
             {"  "}
             {invoice.data?.clientPostCode}
-            {invoice.data?.clientCity}
             <br />
-            {invoice.data?.country}
+            {invoice.data?.clientCountry}
           </Body>
         </div>
 

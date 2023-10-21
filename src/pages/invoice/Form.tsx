@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -224,13 +223,12 @@ const Form = ({
             <HeadingS>Go back</HeadingS>
           </div>
         )}
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <HeadingM tw="mb-[46px]">
             {newInvoice ? "New Invoice" : invoiceId}
           </HeadingM>
-
           <HeadingS tw="text-01 mb-6 dark:text-01">Bill From</HeadingS>
-
           <Controller
             name="streetAddress"
             control={control}
@@ -244,7 +242,6 @@ const Form = ({
               />
             )}
           />
-
           <div tw="flex gap-6">
             <Controller
               name="city"
@@ -283,9 +280,7 @@ const Form = ({
               )}
             />
           </div>
-
           <HeadingS tw="text-01 mb-6 dark:text-01">Bill To</HeadingS>
-
           <Controller
             name="clientName"
             control={control}
@@ -322,7 +317,6 @@ const Form = ({
               />
             )}
           />
-
           <div tw="flex gap-6 mb-[25px]">
             <Controller
               name="clientCity"
@@ -368,7 +362,6 @@ const Form = ({
               setSelected={setPaymentTerms}
             />
           </div>
-
           <div tw="mb-[35px]">
             <Controller
               name="clientProjectDescription"
