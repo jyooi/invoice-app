@@ -1,9 +1,8 @@
-// import { api } from "~/utils/api";
 "use client";
 import dynamic from "next/dynamic";
 import EmptyInvoiceSvg from "../../image/empty_invoice.svg";
 import { Drawer } from "~/components/Drawer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Row from "./Row";
 import { Body, HeadingM } from "~/components/Typography";
@@ -16,6 +15,7 @@ import { useSession } from "next-auth/react";
 
 const Header = dynamic(() => import("./Header"), { ssr: false });
 const Form = dynamic(() => import("./Form"), { ssr: false });
+
 export type InvoiceStatusFilter = {
   DRAFT: boolean;
   PENDING: boolean;
@@ -43,13 +43,15 @@ export default function Invoice() {
 
   const { isTablet } = useResponsiveMatch();
 
+  useEffect(() => {
+    // Reroute to home page if user is not logged in
+    if (!sessionData?.user?.name)
+      void router.push("/", undefined, { shallow: true });
+  }, [sessionData, router]);
+
   const toggleDrawer = () => {
     setAddInvoiceDrawerOpen((prevState) => !prevState);
   };
-
-  if (!sessionData?.user?.name) {
-    void router.push("/", undefined, { shallow: true });
-  }
 
   return (
     <>
