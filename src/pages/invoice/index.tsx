@@ -12,8 +12,7 @@ import { useWindowSize } from "react-use";
 import { api } from "~/utils/api";
 import { Spinner } from "~/components/Spinner";
 import { useRouter } from "next/router";
-
-
+import { useSession } from "next-auth/react";
 
 const Header = dynamic(() => import("./Header"), { ssr: false });
 const Form = dynamic(() => import("./Form"), { ssr: false });
@@ -26,7 +25,7 @@ export type InvoiceStatusFilter = {
 export default function Invoice() {
   const router = useRouter();
 
-  
+  const { data: sessionData } = useSession();
 
   const [invoiceStatusFilter, setInvoiceStatusFilter] =
     useState<InvoiceStatusFilter>({ DRAFT: true, PENDING: true, PAID: true }); // default all checkbox to true to display all types of invoice
@@ -47,6 +46,10 @@ export default function Invoice() {
   const toggleDrawer = () => {
     setAddInvoiceDrawerOpen((prevState) => !prevState);
   };
+
+  if (!sessionData?.user?.name) {
+    void router.push("/", undefined, { shallow: true });
+  }
 
   return (
     <>
