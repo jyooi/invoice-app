@@ -12,7 +12,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     // Always do navigations after the first render
-    !sessionData?.user?.name &&
+    sessionData?.user?.name &&
       void router.push("/invoice", undefined, { shallow: true });
   }, [sessionData, router]);
 
