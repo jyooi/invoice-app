@@ -12,7 +12,8 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     // Always do navigations after the first render
-    sessionData && void router.push("/invoice", undefined, { shallow: true });
+    !sessionData?.user?.name &&
+      void router.push("/invoice", undefined, { shallow: true });
   }, [sessionData, router]);
 
   return (
