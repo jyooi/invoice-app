@@ -9,7 +9,7 @@ import { useResponsiveMatch } from "~/utils/lib";
 import { type InvoiceStatusFilter } from "./index";
 
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+
 type PropType = {
   toggleDrawer: () => void;
   invoiceStatusFilter: InvoiceStatusFilter;

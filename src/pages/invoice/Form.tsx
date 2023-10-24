@@ -66,8 +66,6 @@ const FormContainer = styled.div(() => [
 const Form = ({
   toggleDrawer,
   newInvoice,
-  saveEventHandler,
-  draftEventHandler,
   discardEventHandler,
   updateEventHandler,
   invoiceId,
