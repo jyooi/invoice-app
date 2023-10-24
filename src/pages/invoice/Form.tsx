@@ -102,6 +102,10 @@ const Form = ({
     parseDate(dayjs().format("YYYY-MM-DD"))
   );
 
+  const [invoiceState, setInvoiceState] = useState<"DRAFT" | "PENDING">(
+    "PENDING"
+  );
+
   const createInvoice = api.invoice.createInvoice.useMutation();
 
   const updateInvoice = api.invoice.updateInvoice.useMutation();
@@ -154,6 +158,7 @@ const Form = ({
         )
       );
 
+      // update invoice
       await updateInvoice.mutateAsync({
         ...data,
         paymentTerms: Number(paymentTerms),
@@ -170,7 +175,7 @@ const Form = ({
         ...data,
         paymentTerms: Number(paymentTerms),
         invoiceDate: new Date(invoiceDate.toString()),
-        status: "PENDING",
+        status: invoiceState,
       });
       await utils.invoice.getAllInvoice.invalidate();
     }
@@ -388,16 +393,17 @@ const Form = ({
 
               <div tw="flex gap-2">
                 <Button
+                  type="submit"
                   variant="tertiary"
                   label="Save as draft"
-                  onClick={() => draftEventHandler?.()}
+                  onClick={() => setInvoiceState("DRAFT")}
                 />
 
                 <Button
                   type="submit"
                   variant="primary"
                   label="Save & Send"
-                  onClick={() => saveEventHandler?.()}
+                  onClick={() => setInvoiceState("PENDING")}
                   isLoading={createInvoice.isLoading}
                 />
               </div>
