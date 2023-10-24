@@ -25,8 +25,7 @@ const Header = ({
   setInvoiceStatusFilter,
   invoiceCount,
 }: PropType) => {
-  const router = useRouter();
-  const { data: sessionData, status } = useSession();
+  const { data: sessionData } = useSession();
   const { isTablet, isDesktop } = useResponsiveMatch();
 
   return (
@@ -96,7 +95,6 @@ const Header = ({
               label={"Sign out"}
               onClick={async () => {
                 await signOut();
-                router.push("/");
               }}
             />
           )}

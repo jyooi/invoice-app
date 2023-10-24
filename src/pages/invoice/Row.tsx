@@ -6,6 +6,7 @@ import { Body, HeadingS } from "~/components/Typography";
 import ChevronRightSvg from "../../image/Icons/purple_chevron_right_icon.svg";
 import Image from "next/image";
 import dayjs from "dayjs";
+
 const Container = styled.div(() => [
   tw`min-h-[72px] w-full rounded-md  items-center mb-[15px]`,
   tw`bg-white border border-transparent hover:border hover:border-01 cursor-pointer dark:bg-03`,

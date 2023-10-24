@@ -82,7 +82,7 @@ export default function Invoice() {
             ))
           ) : (
             <>
-              {/* empty invoice */}
+              {/* Empty invoice banner */}
               <Image
                 tw="mt-20"
                 src={EmptyInvoiceSvg as string}
