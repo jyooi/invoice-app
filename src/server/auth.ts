@@ -31,6 +31,8 @@ declare module "next-auth" {
 }
 import GitHubProvider from "next-auth/providers/github";
 
+import GoogleProvider from "next-auth/providers/google";
+
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
  *
@@ -50,7 +52,11 @@ export const authOptions: NextAuthOptions = {
   providers: [
     GitHubProvider({
       clientId: env.GITHUB_ID,
-      clientSecret: env.GITHUB_SECRET,
+      clientSecret: env.GITHUB_ID,
+    }),
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_SECRET,
     }),
 
     /**
