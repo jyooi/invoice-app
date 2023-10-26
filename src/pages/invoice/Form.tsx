@@ -74,7 +74,13 @@ const Form = ({
 
   // if invoiceId is provided, fetch invoice data
 
-  const methods = useForm<InvoiceFormValue>({
+  const {
+    handleSubmit,
+    control,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<InvoiceFormValue>({
     defaultValues: {
       streetAddress: "",
       city: "",
@@ -91,10 +97,7 @@ const Form = ({
     },
   });
 
-  const { handleSubmit, control, watch, reset } = methods;
-  // tract state for Select and DatePicker
-
-  const [paymentTerms, setPaymentTerms] = useState("");
+  const [paymentTerms, setPaymentTerms] = useState("1");
 
   const [invoiceDate, setInvoiceDate] = useState<DateValue>(
     parseDate(dayjs().format("YYYY-MM-DD"))
@@ -211,6 +214,8 @@ const Form = ({
     }
   }, [newInvoice, invoiceId, reset, invoice?.data]);
 
+  console.log(errors);
+
   return (
     <>
       <FormContainer>
@@ -229,7 +234,7 @@ const Form = ({
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <HeadingM tw="mb-[46px]">
-            {newInvoice ? "New Invoice" : invoiceId}
+            {newInvoice ? "New Invoice" : `# ${invoiceId ?? ""}`}
           </HeadingM>
           <HeadingS tw="text-01 mb-6 dark:text-01">Bill From</HeadingS>
           <Controller
@@ -238,10 +243,10 @@ const Form = ({
             rules={{ required: true }}
             render={({ field }) => (
               <TextField
-                tw="w-full mb-[25px]"
                 label="Street Address"
                 {...field}
                 ref={null}
+                error={errors.streetAddress}
               />
             )}
           />
@@ -249,36 +254,39 @@ const Form = ({
             <Controller
               name="city"
               control={control}
+              rules={{ required: true }}
               render={({ field }) => (
                 <TextField
-                  tw="w-full mb-[25px]"
                   label="City"
                   {...field}
                   ref={null}
+                  error={errors.city}
                 />
               )}
             />
             <Controller
               name="postCode"
               control={control}
+              rules={{ required: true }}
               render={({ field }) => (
                 <TextField
-                  tw="w-full mb-[25px]"
                   label="Post Code"
                   {...field}
                   ref={null}
+                  error={errors.postCode}
                 />
               )}
             />
             <Controller
               name="country"
               control={control}
+              rules={{ required: true }}
               render={({ field }) => (
                 <TextField
-                  tw="w-full mb-[25px]"
                   label="Country"
                   {...field}
                   ref={null}
+                  error={errors.country}
                 />
               )}
             />
@@ -287,64 +295,81 @@ const Form = ({
           <Controller
             name="clientName"
             control={control}
+            rules={{ required: true }}
             render={({ field }) => (
               <TextField
-                tw="mb-[25px]"
                 label="Client's Name"
                 {...field}
                 ref={null}
+                error={errors.clientName}
               />
             )}
           />
           <Controller
             name="clientEmail"
             control={control}
+            rules={{ required: true }}
             render={({ field }) => (
               <TextField
-                tw="mb-[25px]"
                 label="Client's Email"
                 {...field}
                 ref={null}
+                error={errors.clientEmail}
               />
             )}
           />
           <Controller
             name="clientStreetAddress"
             control={control}
+            rules={{ required: true }}
             render={({ field }) => (
               <TextField
-                tw="mb-[25px]"
                 label="Street Address"
                 {...field}
                 ref={null}
+                error={errors.clientStreetAddress}
               />
             )}
           />
-          <div tw="flex gap-6 mb-[25px]">
+          <div tw="flex gap-6">
             <Controller
               name="clientCity"
               control={control}
+              rules={{ required: true }}
               render={({ field }) => (
-                <TextField label="City" {...field} ref={null} />
+                <TextField
+                  label="City"
+                  {...field}
+                  ref={null}
+                  error={errors.clientCity}
+                />
               )}
             />
             <Controller
               name="clientPostCode"
               control={control}
+              rules={{ required: true }}
               render={({ field }) => (
                 <TextField
                   label="Post Code"
                   {...field}
                   onChange={(event) => field.onChange(event.target.value)}
                   ref={null}
+                  error={errors.clientPostCode}
                 />
               )}
             />
             <Controller
               name="clientCountry"
               control={control}
+              rules={{ required: true }}
               render={({ field }) => (
-                <TextField label="Country" {...field} ref={null} />
+                <TextField
+                  label="Country"
+                  {...field}
+                  ref={null}
+                  error={errors.clientCountry}
+                />
               )}
             />
           </div>
@@ -369,8 +394,14 @@ const Form = ({
             <Controller
               name="clientProjectDescription"
               control={control}
+              rules={{ required: true }}
               render={({ field }) => (
-                <TextField label="Project Description" {...field} ref={null} />
+                <TextField
+                  label="Project Description"
+                  {...field}
+                  ref={null}
+                  error={errors.clientProjectDescription}
+                />
               )}
             />
           </div>
@@ -381,6 +412,7 @@ const Form = ({
             control={control}
             watch={watch}
           />
+
           {newInvoice ? (
             <div tw="mt-[39px] mb-8 flex justify-between">
               <Button

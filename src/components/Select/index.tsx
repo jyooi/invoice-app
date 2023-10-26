@@ -69,7 +69,7 @@ export function Select({ options, setSelected, selected, label }: PropType) {
         <div tw="relative mt-1">
           <ListButton>
             <HeadingS variant>
-              {options?.find((option) => option.value === selected)?.key}
+              {options?.find((option) => option.value == selected)?.key}
             </HeadingS>
             <span tw="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
               <Image
