@@ -1,8 +1,8 @@
 # Invoice app (frontend mentor project)
 
-### url <https://invoice-app-jyooi.vercel.app/>
+### url <https://invoice-demo.jyooi.com/>
 
-Simple full-stack invoice apps just to showcase the T3 stack. (A project from a front-end mentor for developers to practice their front-end skills)
+Simple full-stack invoice apps to showcase the T3 stack. (A project idea from a frontend mentor (www.frontendmentor.io) for developers to practice their front-end skills)
 
 ## Create T3 App
 
