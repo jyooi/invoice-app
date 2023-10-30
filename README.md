@@ -1,7 +1,7 @@
 # Invoice app (frontend mentor project)
 
 ### url <https://invoice-demo.jyooi.com/> 
-### figma <https://www.figma.com/file/JLdjqmOYSgXEGbxcygVeVY/invoice-app?type=design&node-id=0-7033&mode=design&t=Ikp1rFW9cobCFyou-0>
+### [Figma prototype](https://www.figma.com/file/JLdjqmOYSgXEGbxcygVeVY/invoice-app?type=design&node-id=0-7033&mode=design&t=Ikp1rFW9cobCFyou-0)
 
 Simple full-stack invoice apps to showcase the T3 stack. (A project idea from a frontend mentor (www.frontendmentor.io) for developers to practice their front-end skills)
 
