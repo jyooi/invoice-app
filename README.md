@@ -5,7 +5,7 @@
 
 Simple full-stack invoice apps to showcase the T3 stack. (A project idea from a frontend mentor (www.frontendmentor.io) for developers to practice their front-end skills)
 
-## Create T3 App
+## Create T3 App (Theo)
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
