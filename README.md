@@ -1,6 +1,6 @@
 # Invoice app (frontend mentor project)
 
-### A full-stack invoice app --- 
+### A full-stack invoice app
 
 ### url <https://invoice-demo.jyooi.com/> 
 ### [Figma prototype](https://www.figma.com/file/JLdjqmOYSgXEGbxcygVeVY/invoice-app?type=design&node-id=0-7033&mode=design&t=Ikp1rFW9cobCFyou-0)
